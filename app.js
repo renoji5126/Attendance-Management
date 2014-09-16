@@ -4,6 +4,21 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+/*
+var mongoose = require('mongoose');
+var url = 'mongodb://' + conf.mongodbInfo.url + '/' + conf.mongodbInfo.dbName;
+console.log(url);
+mongoose.connect(url, function(err){
+  if (err) throw err;
+});
+var sampleCollect = new mongoose.Schema({
+  moveId: String,
+  sectionEndPoints: {type:Array, default:[]},
+  sectionDiffrents: {type:Array, default:[]},
+  deleteFlg: {type : Boolean, default: false},
+},{collection: conf.mongodbInfo.collectionName });
+var sampleModel = mongoose.model(conf.mongodbInfo.dbName, sampleCollect);
+*/
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
