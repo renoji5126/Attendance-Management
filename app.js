@@ -4,9 +4,10 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-/*
+
 var mongoose = require('mongoose');
-var url = 'mongodb://' + conf.mongodbInfo.url + '/' + conf.mongodbInfo.dbName;
+//var url = 'mongodb://' + conf.mongodbInfo.url + '/' + conf.mongodbInfo.dbName;
+var url = 'mongodb://heroku_app29643687:t2oj54ve743tp4dlsmne3tr65d@ds035750.mongolab.com:35750/heroku_app29643687';
 console.log(url);
 mongoose.connect(url, function(err){
   if (err) throw err;
@@ -18,7 +19,6 @@ var sampleCollect = new mongoose.Schema({
   deleteFlg: {type : Boolean, default: false},
 },{collection: conf.mongodbInfo.collectionName });
 var sampleModel = mongoose.model(conf.mongodbInfo.dbName, sampleCollect);
-*/
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
