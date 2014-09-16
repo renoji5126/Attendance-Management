@@ -17,8 +17,8 @@ var sampleCollect = new mongoose.Schema({
   sectionEndPoints: {type:Array, default:[]},
   sectionDiffrents: {type:Array, default:[]},
   deleteFlg: {type : Boolean, default: false},
-},{collection: conf.mongodbInfo.collectionName });
-var sampleModel = mongoose.model(conf.mongodbInfo.dbName, sampleCollect);
+},{collection: 'cllectionName' });
+//var sampleModel = mongoose.model(conf.mongodbInfo.dbName, sampleCollect);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
