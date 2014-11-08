@@ -39,7 +39,7 @@ mongoose.connect(url, function(err){
 });
 var userInfo = new mongoose.Schema({
   googleId : String,
-  entryDate: {type : Date , default : ""}
+  entryDate: {type : Date , default : ""},
   className: {type : Array, default : []},
 },{collection: conf.collection_user });
 var userInfoModel = mongoose.model(conf.mongodbInfo.dbName, userInfo);
