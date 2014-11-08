@@ -34,10 +34,17 @@ router.setConfig = function(config){
     },
     function(accessToken, refreshToken, profile, done) {
       console.log(accessToken, refreshToken, profile);
-      userModel.findOrCreate({ googleId: profile.id }, function(err, user) {
-        console.log(user);
-        done(err, user);
-      });
+      userModel.update(
+        { googleId: profile.id },
+        { $setOnInsert: 
+          { googleId: profile.id } 
+        },
+        { upsert: true },
+        function(err, user) {
+          console.log(user);
+          done(err, user);
+        }
+      );
     })
   );
 }
@@ -50,10 +57,11 @@ router.get('/google', passport.authenticate('google',
 router.get('/google/return', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res){
-  console.log(req.user);
-  // 必要に応じてresponseを作ったり、cookieの制御を行う
-  console.log(req.session.passport);
-  res.redirect('/');
-});
+    console.log(req.user);
+    // 必要に応じてresponseを作ったり、cookieの制御を行う
+    console.log(req.session.passport);
+    res.redirect('/');
+  }
+);
 
 module.exports = router;

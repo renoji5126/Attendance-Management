@@ -38,10 +38,9 @@ mongoose.connect(url, function(err){
   if (err) throw err;
 });
 var userInfo = new mongoose.Schema({
-  userName : String,
-  passWord : String,
-  entryDate: Date,
-  className: {type : Array, default: []},
+  googleId : String,
+  entryDate: {type : Date , default : ""}
+  className: {type : Array, default : []},
 },{collection: conf.collection_user });
 var userInfoModel = mongoose.model(conf.mongodbInfo.dbName, userInfo);
 
@@ -81,10 +80,9 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-    if(req.path === '/' ||
+    if(
        req.path === '/login' ||
        req.path === '/logout' || 
-       req.path === '/auth' || 
        req.path === '/auth/google' ||
        req.path === '/auth/google/return' ||
        req.user
