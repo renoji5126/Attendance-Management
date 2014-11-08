@@ -2,25 +2,56 @@ var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
+var conf = require('config');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 var mongoose = require('mongoose');
-//var url = 'mongodb://' + conf.mongodbInfo.url + '/' + conf.mongodbInfo.dbName;
-var url = 'mongodb://heroku_app29643687:t2oj54ve743tp4dlsmne3tr65d@ds035750.mongolab.com:35750/heroku_app29643687';
-console.log(url);
+
+
+//var passport = require('passport');
+//var GoogleStrategy = require('passport-google').Strategy;
+//
+//passport.use(
+//  new GoogleStrategy({
+//    returnURL: 'http://renoji5126.orz.hm/auth/google/return',
+//    realm:     'http://renoji5126.orz.hm/'
+//  },
+//  function(identifier, profile, done) {
+//    userModel.findOrCreate({ openId: identifier }, function(err, user) {
+//      done(err, user);
+//    });
+//  })
+//);
+
+if(process.env.MONGOLAB_URI){
+  var url = process.env.MONGOLAB_URI;
+  conf.mongodbInfo.url = url.replace('mongodb://','').split('/')[0];
+  conf.mongodbInfo.dbName = url.replace('mongodb://','').split('/')[1];
+}else{
+  var url = 'mongodb://' + conf.mongodbInfo.url + '/' + conf.mongodbInfo.dbName;
+}
+//console.log(url);
 mongoose.connect(url, function(err){
   if (err) throw err;
 });
-var sampleCollect = new mongoose.Schema({
-  moveId: String,
-  sectionEndPoints: {type:Array, default:[]},
-  sectionDiffrents: {type:Array, default:[]},
-  deleteFlg: {type : Boolean, default: false},
-},{collection: 'cllectionName' });
-//var sampleModel = mongoose.model(conf.mongodbInfo.dbName, sampleCollect);
+var userInfo = new mongoose.Schema({
+  userName : String,
+  passWord : String,
+  entryDate: Date,
+  className: {type : Array, default: []},
+},{collection: conf.collection_user });
+var userInfoModel = mongoose.model(conf.mongodbInfo.dbName, userInfo);
+
+var kinTai = new mongoose.Schema({
+  startTime: Date,
+  endTime: Date,
+});
 
 var routes = require('./routes/index');
+var auths = require('./routes/auths');
 var users = require('./routes/users');
 
 var app = express();
@@ -34,9 +65,44 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(session({
+  secret: 'uchida',
+  store: new  MongoStore({
+    db: mongoose.connection.db,
+    clear_interval: 60 * 60
+  }),
+  cookie: {
+    httpOnly: false,
+    maxAge: new Date(Date.now() + 60 * 60 * 1000)
+  },
+  rolling: true,
+  resave: true,
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+    if(req.path === '/' ||
+       req.path === '/login' ||
+       req.path === '/logout' || 
+       req.path === '/auth' || 
+       req.path === '/auth/google' ||
+       req.path === '/auth/google/return' ||
+       req.user
+    ){
+      console.log("session:"+ JSON.stringify(req.user));
+      next();
+    }else{
+      console.log("redirect:"+ req);
+      res.redirect('/login');
+    }
+});
+
+routes.setModel(userInfoModel);
+auths.setModel(userInfoModel);
+auths.setConfig(conf.googleAuth);
+
 app.use('/', routes);
+app.use('/auth', auths);
 app.use('/users', users);
 
 /// catch 404 and forward to error handler
