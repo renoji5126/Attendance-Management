@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  a(href='/logout') logout
+  a(href='/') index
+  div.kintai
+    div.kintai_head
+      div.kintai_day
+        div.kintai_start_time 開始時間
+        div.kintai_end_time 終了時間
+    div.kintai_body
+    - var days = Object.keys(kintai.day);
+    for day in days
+      div.kintai_days
+        div.kintai_day= day
+        if(Object.keys(kintai.day[day]).length)
+          input(type="text",value=kintai.day[day].startTime).kintai_start_time
+          input(type="text",value=kintai.day[day].endTime).kintai_end_time
+        else
+          input(type="text",value="").kintai_start_time
+          input(type="text",value="").kintai_end_time
