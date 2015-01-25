@@ -122,7 +122,6 @@ passport.use(
 );
 
 app.use(function(req, res, next) {
-    console.log(req.session.passport.user);
     if(
        req.session.passport.user || (
          !req.session.passport.user && (
