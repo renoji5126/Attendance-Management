@@ -60,6 +60,7 @@ if(process.env.GOOGLE_AUTH_MAIL)
   googleConfig.client_email = process.env.GOOGLE_AUTH_MAIL;
 if(process.env.GOOGLE_AUTH_SCRIPTORIGIN)
   googleConfig.javascript_origins = [ process.env.GOOGLE_AUTH_SCRIPTORIGIN ];
+app.config.googleAuth = googleConfig;
 var routes = require('./routes/index');
 var auths = require('./routes/auths');
 var users = require('./routes/users');

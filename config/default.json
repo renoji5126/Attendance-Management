@@ -1,0 +1,7 @@
+{
+  "mongodbInfo":{
+    "url":"localhost",
+    "dbName": "atten",
+    "collectionName_user":"users" 
+  }
+}
