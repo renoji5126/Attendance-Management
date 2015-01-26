@@ -97,10 +97,7 @@ passport.use(
     clientID    : googleConfig.client_id,
     clientSecret: googleConfig.client_secret,
     clientEmail : googleConfig.client_email,
-    //callbackURL : 'http://renoji5126.orz.hm/auth/google/return',
-    callbackURL : 'http://attendance-management.herokuapp.com/auth/google/return',
-    //callbackURL : 'http://192.168.11.20:8080/auth/google/return',
-    //callbackURL : googleConfig.redirect_uris,
+    callbackURL : googleConfig.javascript_origins[0] + 'auth/google/return',
   },
   function(accessToken, refreshToken, profile, done) {
     app.userInfoModel.update(
