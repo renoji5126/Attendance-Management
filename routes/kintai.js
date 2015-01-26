@@ -70,8 +70,6 @@ router.get('/:year/:month/:day', function(req, res) {
     month: month,
     day: day
   };
-  if(req.query.type)
-    query.type = req.query.type;
   model.find( query ,{
     _id        : 0,
     startTime  : 1,
