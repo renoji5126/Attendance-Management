@@ -1,4 +1,5 @@
 // this file rename "default.json"
+// googleAuth is https://console.developers.google.com/project
 
 {
   "mongodbInfo":{
