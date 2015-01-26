@@ -52,6 +52,14 @@ app.kintaiSchema = new mongoose.Schema({
 app.mongoose = mongoose;
 app.config = conf;
 var googleConfig = app.config.googleAuth;
+if(process.env.GOOGLE_AUTH_CLIENTID)
+  googleConfig.client_id = process.env.GOOGLE_AUTH_CLIENTID;
+if(process.env.GOOGLE_AUTH_CLIENTSECRET)
+  googleConfig.client_secret = process.env.GOOGLE_AUTH_CLIENTSECRET;
+if(process.env.GOOGLE_AUTH_MAIL)
+  googleConfig.client_email = process.env.GOOGLE_AUTH_MAIL;
+if(process.env.GOOGLE_AUTH_SCRIPTORIGIN)
+  googleConfig.javascript_origins = [ process.env.GOOGLE_AUTH_SCRIPTORIGIN ];
 var routes = require('./routes/index');
 var auths = require('./routes/auths');
 var users = require('./routes/users');
