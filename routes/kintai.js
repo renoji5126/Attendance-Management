@@ -65,11 +65,14 @@ router.get('/:year/:month/:day', function(req, res) {
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
   var model = mongoose.model( req.session.passport.user.id, kintai_schema);
-  model.find({
+  var query = {
     year: year,
     month: month,
     day: day
-  },{
+  };
+  if(req.query.type)
+    query.type = req.query.type;
+  model.find( query ,{
     _id        : 0,
     startTime  : 1,
     stopTime   : 1,
