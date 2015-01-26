@@ -17,6 +17,8 @@ block content
           if(Object.keys(kintai.day[day]).length)
             input(type="text",value=kintai.day[day].startTime).kintai_start_time
             input(type="text",value=kintai.day[day].endTime).kintai_end_time
+            input(type="text",value=kintai.day[day].registType).kintai_type
           else
             input(type="text",value="").kintai_start_time
             input(type="text",value="").kintai_end_time
+            input(type="text",value="").kintai_type

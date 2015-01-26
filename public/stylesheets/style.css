@@ -47,5 +47,8 @@ a {
     position: relative;
     width: 100px;
     top:0px;
+    float: left;
     left: 20px;
 }
+
+.kintai_type
