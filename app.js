@@ -51,7 +51,7 @@ app.kintaiSchema = new mongoose.Schema({
 });
 app.mongoose = mongoose;
 app.config = conf;
-var googleConfig = app.config.googleAuth;
+var googleConfig = {};
 if(process.env.GOOGLE_AUTH_CLIENTID)
   googleConfig.client_id = process.env.GOOGLE_AUTH_CLIENTID;
 if(process.env.GOOGLE_AUTH_CLIENTSECRET)
