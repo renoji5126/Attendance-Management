@@ -28,7 +28,6 @@ a {
 .kintai_days {
     width: 100%;
     top:0px;
-    float: none;
 }
 
 .kintai_day {
@@ -51,4 +50,7 @@ a {
     left: 20px;
 }
 
-.kintai_type
+.kintai_type {
+    position: relative;
+    left: 20px;
+}
