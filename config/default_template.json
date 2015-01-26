@@ -1,0 +1,15 @@
+// this file rename "default.json"
+
+{
+  "mongodbInfo":{
+    "url":"localhost",
+    "dbName": "atten",
+    "collectionName_user":"users" 
+  },
+  "googleAuth":{
+    "client_secret":"XXXXXXXXXXXXXXXXXXXXXXX",
+    "client_email":"XXXXXXXXXXXXXXXXXXXXXXXXXXX@developer.gserviceaccount.com",
+    "client_id":"XXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com",
+    "javascript_origins":["http://XXX.XXXXXXXXXXXX.XX.XX/"]
+  }
+}
