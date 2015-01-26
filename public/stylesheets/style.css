@@ -6,3 +6,46 @@ body {
 a {
   color: #00B7FF;
 }
+
+.kintai {
+    width: 600px;
+}
+.kintai_head {
+    width: 100%;
+}
+
+.kintai_month {
+    width: 20px;
+    position: relative;
+    top: 0px;
+    float: left;
+}
+
+.kintai_body {
+    width: 100%;
+}
+
+.kintai_days {
+    width: 100%;
+    top:0px;
+    float: none;
+}
+
+.kintai_day {
+    width: 20px;
+    top:0px;
+    float: left;
+}
+
+.kintai_start_time {
+    position: relative;
+    width: 100px;
+    top:0px;
+    float: left;
+}
+.kintai_end_time {
+    position: relative;
+    width: 100px;
+    top:0px;
+    left: 20px;
+}
