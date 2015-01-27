@@ -10,47 +10,30 @@ a {
 .kintai {
     width: 600px;
 }
-.kintai_head {
-    width: 100%;
-}
-
-.kintai_month {
-    width: 20px;
+.kintai_column {
     position: relative;
     top: 0px;
     float: left;
 }
 
-.kintai_body {
-    width: 100%;
+.kintai_month {
+}
+
+.kintai_head {
+    white-space: nowrap;
 }
 
 .kintai_days {
-    width: 100%;
-    top:0px;
+    white-space: nowrap;
 }
 
 .kintai_day {
-    width: 20px;
-    top:0px;
-    float: left;
 }
 
 .kintai_start_time {
-    position: relative;
-    width: 100px;
-    top:0px;
-    float: left;
 }
 .kintai_end_time {
-    position: relative;
-    width: 100px;
-    top:0px;
-    float: left;
-    left: 20px;
 }
 
 .kintai_type {
-    position: relative;
-    left: 20px;
 }
