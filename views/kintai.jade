@@ -4,23 +4,31 @@ block content
   h1= title
   a(href='/logout') logout
   a(href='/') index
-  div.kintai
-    div.kintai_head
-      div.kintai_column.kintai_year= kintai.year
-      div.kintai_column.kintai_month= kintai.month
-      div.kintai_column.kintai_start_time 開始時間
-      div.kintai_column.kintai_end_time 終了時間
-      div.kintai_column.kintai_type 登録タイプ
-    div.kintai_body
+  table.kintai
+    thead.kintai_head
+      tr
+        th(colspan="4").kintai_year= kintai.year
+      tr
+        th.kintai_month= kintai.month
+        th 開始時間
+        th 終了時間
+        th 登録タイプ
+    tbody.kintai_body
       - var days = Object.keys(kintai.day);
       for day in days
-        div.kintai_days
-          div.kintai_column.kintai_day= day
+        tr.kintai_days
+          td.kintai_day= day
           if(Object.keys(kintai.day[day]).length)
-            input(type="text",value=kintai.day[day].startTime).kintai_column.kintai_start_time
-            input(type="text",value=kintai.day[day].endTime).kintai_column.kintai_end_time
-            input(type="text",value=kintai.day[day].registType).kintai_column.kintai_type
+            td
+              input(type="text",value=kintai.day[day].startTime).kintai_start_time
+            td
+              input(type="text",value=kintai.day[day].endTime).kintai_end_time
+            td
+              input(type="text",value=kintai.day[day].registType).kintai_type
           else
-            input(type="text",value="").kintai_column.kintai_start_time
-            input(type="text",value="").kintai_column.kintai_end_time
-            input(type="text",value="").kintai_column.kintai_type
+            td
+              input(type="text",value="").kintai_start_time
+            td
+              input(type="text",value="").kintai_end_time
+            td
+              input(type="text",value="").kintai_type
