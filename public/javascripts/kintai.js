@@ -9,6 +9,12 @@ $(function(){
     var start_time = $dom.children("td").children(".kintai_start_time").val();
     var end_time = $dom.children("td").children(".kintai_end_time").val();
     var regist_type = $dom.children("td").children(".kintai_type").val();
-    console.log(day,start_time,end_time,regist_type);
+    console.log(year,month,day,start_time,end_time,regist_type);
+
+    $.ajax({
+      type: "POST",
+      url: "/kintai/" + year + "/" + month + "/" + day + "/",
+      data: "startTime=" + start_time + "&stopTime=" + end_time + "&type=" + regist_type 
+    });
   });
 });

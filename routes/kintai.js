@@ -91,6 +91,7 @@ router.post('/:year/:month/:day', function(req, res) {
     !req.params.day.match(/^[0-9]{2}$/)  ||
     !req.body.type
   ){ res.redirect("/"); }
+  console.log(req.body);
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
