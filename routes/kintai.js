@@ -26,11 +26,11 @@ function CreateCalenderJson(_id, _year, _month, cb){
         month: month,
         day  : i
       },{// view
-        _id        : 0,
-        startTime  : 1,
-        stopTime   : 1,
-        registType : 1,
-        registTime : 1
+        _id        : 0
+        ,startTime : 1
+        ,stopTime  : 1
+        ,registType: 1
+        //,registTime : 1
       },{// option
         sort:{created: -1},
         //limit: 1
@@ -39,6 +39,7 @@ function CreateCalenderJson(_id, _year, _month, cb){
         tmp[i.toString()] = result;
       });
   }
+  console.log( tmp );
   return tmp;
 }
 
