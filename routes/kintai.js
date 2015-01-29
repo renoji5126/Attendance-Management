@@ -20,27 +20,33 @@ function CreateCalenderJson(_id, _year, _month, cb){
   dat.setDate(0);
   for( i = 1; i <= dat.getDate(); i++){
     tmp[i.toString()] = {};
+  }
+  console.log(tmp);
+  Object.keys(tmp).forEach(function(day, index){
     model.find(
       {// query
         year : year,
         month: month,
-        day  : i
+        day  : day
       },{// view
-        _id        : 0
-        ,startTime : 1
-        ,stopTime  : 1
-        ,registType: 1
-        //,registTime : 1
+        _id         : 0
+        ,startTime  : 1
+        ,stopTime   : 1
+        ,registType : 1
+        ,registTime : 1
       },{// option
         sort:{created: -1},
         //limit: 1
       }, function(err, result){
-        console.log(i,result);
-        tmp[i.toString()] = result;
+        console.log(day,result);
+        tmp[day.toString()] = result;
+        if(tmp.length - 1 === index){
+          console.log( tmp );
+          cb(tmp);
+          return tmp;
+        }
       });
-  }
-  console.log( tmp );
-  return tmp;
+  });
 }
 
 /* GET users listing. */
@@ -93,7 +99,7 @@ router.post('/:year/:month/:day', function(req, res) {
     !req.params.month.match(/^[0-9]{2}$/)||
     !req.params.day.match(/^[0-9]{2}$/)  ||
     !req.body.type
-  ){ res.redirect("/"); }
+  ){ res.json({message: "success"}); }
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
