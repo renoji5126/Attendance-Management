@@ -85,13 +85,13 @@ router.get('/:year/:month/:day', function(req, res) {
 
 
 router.post('/:year/:month/:day', function(req, res) {
+  console.log(req.body);
   if(
     !req.params.year.match(/^[0-9]{4}$/) ||
     !req.params.month.match(/^[0-9]{2}$/)||
     !req.params.day.match(/^[0-9]{2}$/)  ||
     !req.body.type
   ){ res.redirect("/"); }
-  console.log(req.body);
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
