@@ -35,7 +35,7 @@ function CreateCalenderJson(_id, _year, _month, cb){
         sort:{created: -1},
         //limit: 1
       }, function(err, result){
-        console.log(result);
+        console.log(i,result);
         tmp[i.toString()] = result;
       });
   }
