@@ -140,7 +140,7 @@ router.get('/', function(req, res){
     month: month,
     day: {}
   };
-  for( i = 1; i <= dat.getDate(); i++){
+  for( i = 1; i <= date.getDate(); i++){
     result.day[i.toString()] = {};
   }
   var task = [];
