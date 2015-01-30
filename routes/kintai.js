@@ -95,7 +95,7 @@ router.post('/:year/:month/:day', function(req, res) {
     !req.params.month.match(/^[0-9]{2}$/)||
     !req.params.day.match(/^[0-9]{2}$/)  ||
     !req.body.type
-  ){ res.json({message: "success"}); }
+  ){ res.json({message: "Failed"}); }
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
@@ -103,14 +103,15 @@ router.post('/:year/:month/:day', function(req, res) {
                year.toString()  + "-" +
                month.toString() + "-" +
                day.toString()   + "T" +
-               req.body.startTime    + "+09:00"
+               req.body.startTime    + ":00+09:00"
              );
   var stopTime = new Date(
                year.toString()  + "-" +
                month.toString() + "-" +
                day.toString()   + "T" +
-               req.body.stopTime    + "+09:00"
+               req.body.stopTime    + ":00+09:00"
              );
+  console.log(startTime, stopTime);
   var model = mongoose.model( req.session.passport.user.id, kintai_schema);
   var kintai = new model({
     "year" : year,
