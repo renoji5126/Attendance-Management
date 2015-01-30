@@ -5,47 +5,39 @@ var router = express.Router();
 var kintai_schema = module.parent.exports.kintaiSchema;
 var mongoose = module.parent.exports.mongoose;
 
-//カレンダーのオブジェクトを返す
-function CreateCalenderJson(_id, _year, _month, cb){
+//指定された日付のデータをDBから探して返す
+function CreateCalenderJson(_id, _day, _year, _month, cb){
+  var day = parseInt(_day);
   var year = parseInt(_year);
   var month = parseInt(_month);
-  if( isNaN(year) || isNaN(month) ){ 
+  if(isNaN(day) || isNaN(year) || isNaN(month) ){ 
     console.log({error:{msg:"Invalied required." ,status:400}});
   }
   var model = mongoose.model( _id, kintai_schema);
   var tmp = { };
-  var dat = new Date(month.toString() + "-01-" + year.toString());
-  // Monthの設定は0-11
-  dat.setMonth(month);
-  dat.setDate(0);
-  for( i = 1; i <= dat.getDate(); i++){
-    tmp[i.toString()] = {};
-  }
   console.log(tmp);
-  Object.keys(tmp).forEach(function(day, index){
-    model.find(
-      {// query
-        year : year,
-        month: month,
-        day  : day
-      },{// view
-        _id         : 0
-        ,startTime  : 1
-        ,stopTime   : 1
-        ,registType : 1
-        ,registTime : 1
-      },{// option
-        sort:{created: -1},
-        //limit: 1
-      }, function(err, result){
-        console.log(day,result);
-        tmp[day.toString()] = result;
-        if(tmp.length - 1 === index){
-          console.log( tmp );
-          cb(tmp);
-          return tmp;
-        }
-      });
+  model.find(
+    {// query
+      year : year,
+      month: month,
+      day  : day
+    },{// view
+      _id         : 0
+      ,startTime  : 1
+      ,stopTime   : 1
+      ,registType : 1
+      ,registTime : 1
+    },{// option
+      sort:{created: -1},
+      //limit: 1
+    }, function(err, result){
+      console.log(day,result);
+      tmp[day.toString()] = result;
+      if(tmp.length - 1 === index){
+        console.log( tmp );
+        cb(tmp);
+        return tmp;
+      }
   });
 }
 
@@ -55,12 +47,25 @@ router.get('/:year/:month', function(req, res) {
     !req.params.year.match(/^[0-9]{4}$/) ||
     !req.params.month.match(/^[0-9]{2}$/)
   ){ res.json({ message : "invaled request" }); }
+  var dat = new Date(month.toString() + "-01-" + year.toString());
+  // Monthの設定は0-11
+  dat.setMonth(month);
+  dat.setDate(0);
   var result = {
     year : req.params.year,
     month: req.params.month,
-    day  : CreateCalenderJson(req.session.passport.user.id, req.params.year, req.params.month)
+    day: {}
   };
-  res.json(result);
+  for( i = 1; i <= dat.getDate(); i++){
+    result.day[i.toString()] = {};
+  }
+  Object.keys(result.day).forEach(function(day, index){
+    CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
+      result.day[day.toString()] = days;
+      if(day === Object.keys(result.day).length)
+        res.json(result);
+    });
+  });
 });
 
 router.get('/:year/:month/:day', function(req, res) {
@@ -72,21 +77,7 @@ router.get('/:year/:month/:day', function(req, res) {
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
-  var model = mongoose.model( req.session.passport.user.id, kintai_schema);
-  var query = {
-    year: year,
-    month: month,
-    day: day
-  };
-  model.find( query ,{
-    _id        : 0,
-    startTime  : 1,
-    stopTime   : 1,
-    registType : 1,
-    registTime : 1
-  },{
-    sort: {created: -1},
-  }, function(err, result){
+  CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(result){
     res.json(result);
   });
 });
