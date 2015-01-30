@@ -59,16 +59,15 @@ router.get('/:year/:month', function(req, res) {
   for( i = 1; i <= dat.getDate(); i++){
     result.day[i.toString()] = {};
   }
-  console.log(result);
   var task = [];
   Object.keys(result.day).forEach(function(day, index){
     task.push(function(cb){
       CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
-        console.log(index, Object.keys(result.day).length);
         //result.day[day.toString()] = days;
         cb(null, days);
       });
     });
+    console.log(index, Object.keys(result.day).length - 1);
     if(index === Object.keys(result.day).length - 1)
       async.series(task, function(err, results){
         console.log(results);
