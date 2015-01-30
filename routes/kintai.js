@@ -10,6 +10,7 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
   var day = parseInt(_day);
   var year = parseInt(_year);
   var month = parseInt(_month);
+  console.log(year,month,day);
   if(isNaN(day) || isNaN(year) || isNaN(month) ){ 
     console.log({error:{msg:"Invalied required." ,status:400}});
     cb();
@@ -57,6 +58,7 @@ router.get('/:year/:month', function(req, res) {
   for( i = 1; i <= dat.getDate(); i++){
     result.day[i.toString()] = {};
   }
+  console.log(result);
   Object.keys(result.day).forEach(function(day, index){
     CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
       console.log(day, Object.keys(result.day).length);
