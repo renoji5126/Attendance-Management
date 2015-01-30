@@ -61,9 +61,9 @@ router.get('/:year/:month', function(req, res) {
   console.log(result);
   Object.keys(result.day).forEach(function(day, index){
     CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
-      console.log(day, Object.keys(result.day).length);
+      console.log(index, Object.keys(result.day).length);
       result.day[day.toString()] = days;
-      if(day == Object.keys(result.day).length)
+      if(index == Object.keys(result.day).length - 1)
         res.json(result);
     });
   });
