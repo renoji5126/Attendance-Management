@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var async = require('async');
 var router = express.Router();
 var kintai_schema = module.parent.exports.kintaiSchema;
 var mongoose = module.parent.exports.mongoose;
@@ -59,13 +60,20 @@ router.get('/:year/:month', function(req, res) {
     result.day[i.toString()] = {};
   }
   console.log(result);
+  var task = [];
   Object.keys(result.day).forEach(function(day, index){
-    CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
-      console.log(index, Object.keys(result.day).length);
-      result.day[day.toString()] = days;
-      if(index == Object.keys(result.day).length - 1)
-        res.json(result);
+    task.push(function(cb){
+      CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
+        console.log(index, Object.keys(result.day).length);
+        //result.day[day.toString()] = days;
+        cb(null, days);
+      });
     });
+    if(index === Object.keys(result.day).length - 1)
+      async.series(task, function(err, results){
+        console.log(results);
+        res.json(results);
+      });
   });
 });
 
