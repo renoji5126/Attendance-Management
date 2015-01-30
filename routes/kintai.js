@@ -12,10 +12,10 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
   var month = parseInt(_month);
   if(isNaN(day) || isNaN(year) || isNaN(month) ){ 
     console.log({error:{msg:"Invalied required." ,status:400}});
+    cb();
   }
   var model = mongoose.model( _id, kintai_schema);
   var tmp = { };
-  console.log(tmp);
   model.find(
     {// query
       year : year,
@@ -31,7 +31,7 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
       sort:{created: -1},
       //limit: 1
     }, function(err, result){
-      console.log(day,result);
+      if(err) console.log(err)
       cb(result);
       return tmp;
   });
@@ -59,6 +59,7 @@ router.get('/:year/:month', function(req, res) {
   }
   Object.keys(result.day).forEach(function(day, index){
     CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
+      console.log(day, Object.keys(result.day).length);
       result.day[day.toString()] = days;
       if(day === Object.keys(result.day).length)
         res.json(result);
@@ -82,7 +83,6 @@ router.get('/:year/:month/:day', function(req, res) {
 
 
 router.post('/:year/:month/:day', function(req, res) {
-  console.log(req.body);
   if(
     !req.params.year.match(/^[0-9]{4}$/) ||
     !req.params.month.match(/^[0-9]{2}$/)||
