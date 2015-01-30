@@ -52,8 +52,8 @@ router.get('/:year/:month', function(req, res) {
   dat.setMonth(month);
   dat.setDate(0);
   var result = {
-    year : req.params.year,
-    month: req.params.month,
+    year : year,
+    month: month,
     day: {}
   };
   for( i = 1; i <= dat.getDate(); i++){
@@ -62,16 +62,14 @@ router.get('/:year/:month', function(req, res) {
   var task = [];
   Object.keys(result.day).forEach(function(day, index){
     task.push(function(cb){
-      CreateCalenderJson(req.session.passport.user.id, day, req.params.year, req.params.month, function(days){
-        //result.day[day.toString()] = days;
+      CreateCalenderJson(req.session.passport.user.id, day, year, month, function(days){
+        result.day[day.toString()] = days;
         cb(null, days);
       });
     });
-    console.log(index, Object.keys(result.day).length - 1);
     if(index === Object.keys(result.day).length - 1)
       async.series(task, function(err, results){
-        console.log(results);
-        res.json(results);
+        res.json(result);
       });
   });
 });
@@ -140,9 +138,24 @@ router.get('/', function(req, res){
   var result = {
     year : year,
     month: month,
-    day  : CreateCalenderJson(req.session.passport.user.id, year, month)
+    day: {}
   };
-  res.render('kintai', { title : "勤怠入力", kintai: result });
+  for( i = 1; i <= dat.getDate(); i++){
+    result.day[i.toString()] = {};
+  }
+  var task = [];
+  Object.keys(result.day).forEach(function(day, index){
+    task.push(function(cb){
+      CreateCalenderJson(req.session.passport.user.id, day, year, month, function(days){
+        result.day[day.toString()] = days;
+        cb(null, days);
+      });
+    });
+    if(index === Object.keys(result.day).length - 1)
+      async.series(task, function(err, results){
+        res.render('kintai', { title : "勤怠入力", kintai: result });
+      });
+  });
 });
 
 module.exports = router;
