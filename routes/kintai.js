@@ -32,12 +32,8 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
       //limit: 1
     }, function(err, result){
       console.log(day,result);
-      tmp[day.toString()] = result;
-      if(tmp.length - 1 === index){
-        console.log( tmp );
-        cb(tmp);
-        return tmp;
-      }
+      cb(result);
+      return tmp;
   });
 }
 
@@ -47,7 +43,9 @@ router.get('/:year/:month', function(req, res) {
     !req.params.year.match(/^[0-9]{4}$/) ||
     !req.params.month.match(/^[0-9]{2}$/)
   ){ res.json({ message : "invaled request" }); }
-  var dat = new Date(month.toString() + "-01-" + year.toString());
+  var year  = parseInt(req.params.year);
+  var month = parseInt(req.params.month);
+  var dat   = new Date(month.toString() + "-01-" + year.toString());
   // Monthの設定は0-11
   dat.setMonth(month);
   dat.setDate(0);
