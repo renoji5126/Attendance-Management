@@ -1,6 +1,7 @@
 
 $(function(){
   var regist = function(className){
+    console.log(className,this);
     $dom=$(this).parent().parent();
     var day = $dom.children(".kintai_day").text();
     var month = $(".kintai_month").text();
@@ -17,7 +18,5 @@ $(function(){
       });
     }
   };
-  $("input").change(function(e){
-    console.log(e,this);
-  });
+  $("input").change(regist);
 });
