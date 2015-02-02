@@ -11,13 +11,11 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
   var day = parseInt(_day);
   var year = parseInt(_year);
   var month = parseInt(_month);
-  console.log(year,month,day);
   if(isNaN(day) || isNaN(year) || isNaN(month) ){ 
     console.log({error:{msg:"Invalied required." ,status:400}});
     cb();
   }
   var model = mongoose.model( _id, kintai_schema);
-  var tmp = { };
   model.find(
     {// query
       year : year,
@@ -35,7 +33,6 @@ function CreateCalenderJson(_id, _day, _year, _month, cb){
     }, function(err, result){
       if(err) console.log(err)
       cb(result);
-      return tmp;
   });
 }
 
@@ -47,8 +44,9 @@ router.get('/:year/:month', function(req, res) {
   ){ res.json({ message : "invaled request" }); }
   var year  = parseInt(req.params.year);
   var month = parseInt(req.params.month);
-  var dat   = new Date(month.toString() + "-01-" + year.toString());
+  var dat   = new Date();
   // Monthの設定は0-11
+  dat.setFullYear(year);
   dat.setMonth(month);
   dat.setDate(0);
   var result = {
@@ -99,18 +97,20 @@ router.post('/:year/:month/:day', function(req, res) {
   var year = parseInt(req.params.year);
   var month= parseInt(req.params.month);
   var day  = parseInt(req.params.day);
-  var startTime = new Date(
-               year.toString()  + "-" +
-               month.toString() + "-" +
-               day.toString()   + "T" +
-               req.body.startTime    + ":00+09:00"
-             );
-  var stopTime = new Date(
-               year.toString()  + "-" +
-               month.toString() + "-" +
-               day.toString()   + "T" +
-               req.body.stopTime    + ":00+09:00"
-             );
+  var startTime = new Date();
+  startTime.setFullYear(year);
+  startTime.setMonth(month - 1);
+  startTime.setDate(day);
+  var stime = req.body.startTime.split(":");
+  startTime.setHours(parseInt(stime[0]) - 9 , parseInt(stime[1]), 0);//    + "+09:00"
+
+  var stopTime = new Date();
+  stopTime.setFullYear(year);
+  stopTime.setMonth(month - 1);
+  stopTime.setDate(day);
+  var etime = req.body.stopTime.split(":");
+  stopTime.setHours(parseInt(etime[0]) - 9 , parseInt(etime[1]), 0);//    + "+09:00"
+  // TODO InvailedDateになってるので修正
   console.log(startTime, stopTime);
   var model = mongoose.model( req.session.passport.user.id, kintai_schema);
   var kintai = new model({
@@ -132,10 +132,77 @@ router.post('/:year/:month/:day', function(req, res) {
   });
 });
 
+router.post('/:year/:month/:day/start', function(req, res) {
+  if(
+    !req.params.year.match(/^[0-9]{4}$/) ||
+    !req.params.month.match(/^[0-9]{2}$/)||
+    !req.params.day.match(/^[0-9]{2}$/)  ||
+    !req.body.type
+  ){ res.json({message: "Failed"}); }
+  var year = parseInt(req.params.year);
+  var month= parseInt(req.params.month);
+  var day  = parseInt(req.params.day);
+  var startTime = new Date();
+  var model = mongoose.model( req.session.passport.user.id, kintai_schema);
+  model.findOne(
+    {// query
+      year  : year,
+      month : month,
+      day   : day,
+      registType : req.body.type
+    },{// view
+      _id        : 1
+    },{// option
+      sort:{created: -1},
+      //limit: 1
+    }, function(err, result){
+      if(err) console.log(err);
+      result.startTime = startTime;
+      result.save(function(err){
+        if(err) console.log(err);
+      });
+  });
+});
+
+router.post('/:year/:month/:day/end', function(req, res) {
+  if(
+    !req.params.year.match(/^[0-9]{4}$/) ||
+    !req.params.month.match(/^[0-9]{2}$/)||
+    !req.params.day.match(/^[0-9]{2}$/)  ||
+    !req.body.type
+  ){ res.json({message: "Failed"}); }
+  var year = parseInt(req.params.year);
+  var month= parseInt(req.params.month);
+  var day  = parseInt(req.params.day);
+  var stopTime = new Date();
+  console.log(startTime, stopTime);
+  var model = mongoose.model( req.session.passport.user.id, kintai_schema);
+  model.findOne(
+    {// query
+      year  : year,
+      month : month,
+      day   : day,
+      registType : req.body.type
+    },{// view
+      _id        : 1
+    },{// option
+      sort:{created: -1},
+      //limit: 1
+    }, function(err, result){
+      if(err) console.log(err);
+      result.stopTime = stopTime;
+      result.save(function(err){
+        if(err) console.log(err);
+      });
+  });
+});
+
 router.get('/', function(req, res){
   var date = new Date();
   var month = date.getMonth() + 1;
-  var year = date.getFullYear();
+  var year  = date.getFullYear();
+  date.setMonth(month);
+  date.setDate(0);
   var result = {
     year : year,
     month: month,
