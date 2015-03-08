@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  a(href='/logout') logout
+  a(href='/') index
+  table.kintai
+    thead.kintai_head
+      tr
+        th(colspan="4").kintai_year= kintai.year
+      tr
+        th.kintai_month= kintai.month
+        th 開始時間
+        th 終了時間
+        th 登録タイプ
+    tbody.kintai_body
+      - var days = Object.keys(kintai.day);
+      for day in days
+        tr.kintai_days
+          td
+            input(type="text",value=kintai.day[day][0].stopTime).kintai_stopTime

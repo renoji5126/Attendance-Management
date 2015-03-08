@@ -1,9 +1,96 @@
 doctype html
-html
+html(lang='ja')
   head
     title= title
+    link(rel='stylesheet', href='/plugins/bootstrap/bootstrap.css')
+    link(rel='stylesheet', href='/plugins/jquery-ui/jquery-ui.min.css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css')
+    link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Righteous')
+    link(rel='stylesheet', href='/plugins/fancybox/jquery.fancybox.css')
+    link(rel='stylesheet', href='/plugins/fullcalendar/fullcalendar.css')
+    link(rel='stylesheet', href='/plugins/xcharts/xcharts.min.css')
+    link(rel='stylesheet', href='/plugins/select2/select2.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
-    script(src="/javascripts/kintai.js")
+    link(rel='stylesheet', href='/stylesheets/style.min.css')
+    
   body
-    block content
+    div#screensaver
+      canvas#canvas
+      i.fa.fa-lock#screen_unlock
+    div#modalbox
+      div.devoops-modal
+        div.devoops-modal-header
+          div.modal-header-name
+            span Basic table
+          div.box-icons
+            a.close-link
+              i.fa.fa-times
+          div.devoops-modal-inner
+          div.devoops-modal-bottom
+    header.navbar
+      div.container-fluid.expanded-panel
+        div.row
+          div#logo.col-xs-12.col-sm-2
+            a(href='/')
+          div#top-panel.col-xs-12.col-sm-10
+            div.row
+              div.col-xs-8.col-sm-4
+                a.show-sidebar(href='#')
+                  i.fa.fa-bars
+                div#search
+                  input(type='text',placeholder='search')
+                  i.fa.fa-search
+              div.col-xs-4.col-sm-8.top-panel-right
+                ul.nav.navbar-nav.pull-right.panel-menu
+                  li.hidden-xs
+                    a.modal-link(href='/')
+                      i.fa.fa-bell
+                      span.badge 7
+                  li.hidden-xs
+                    a.ajax-link(href='/')
+                      i.fa.fa-envelope
+                      span.badge 8
+                  li.dropdown
+                    a.dropdown-toggle.account(href='#',data-toggle='dropdown')
+                      div.avatar
+                        img.img-rounded(src= user.picture,alt='avatar')
+                      i.fa.fa-angle-down.pull-right
+                      div.user-mini.pull-right
+                        span.welcome Welcome,
+                        span= user.name
+                    ul.dropdown-menu
+                      li
+                        a(href='#')
+                          i.fa.fa-user
+                          span Profile
+                      li
+                        a.ajax-link(href='/kintai')
+                          i.fa.fa-envelope
+                          span 履歴
+                      li
+                        a.modal-link(href='/logout')
+                          i.fa.fa-power-off
+                          span Logout
+    div#main.container-fluid
+      div.row
+        div#sidebar-left.col-xs-2.col-sm-2
+          ul.nav.main-menu
+            li
+              a.active.ajax-link(href='/')
+                i.fa.fa-dashboard
+                span.hidden-xs Dashboard
+        div#content.col-xs-12.col-sm-10
+          div.preloader
+            img.devoops-getdata(src='images/devoops_getdata.gif',alt='preloader')
+          div#ajax-content
+            block content
+    
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='/plugins/jquery-ui/jquery-ui.min.js')
+    script(src='/plugins/bootstrap/bootstrap.min.js')
+    script(src='/plugins/justified-gallery/jquery.justifiedgallery.min.js')
+    script(src='/plugins/tinymce/tinymce.min.js')
+    script(src='/plugins/jquery.tinymce.min.js')
+    script(src="/javascripts/devoops.js")
+    script(src="/javascripts/kintai.js")
+    

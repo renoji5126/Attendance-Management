@@ -20,15 +20,15 @@ block content
           td.kintai_day= day
           if(Object.keys(kintai.day[day]).length)
             td
-              input(type="text",value=kintai.day[day][0].startTime).kintai_start_time
+              input(type="text",value=kintai.day[day][0].startTime).kintai_startTime
             td
-              input(type="text",value=kintai.day[day][0].stopTime).kintai_stop_time
+              input(type="text",value=kintai.day[day][0].stopTime).kintai_stopTime
             td
-              input(type="text",value=kintai.day[day][0].registType).kintai_type
+              input(type="text",value=kintai.day[day][0].registType).kintai_registType
           else
             td
-              input(type="text",value="").kintai_start_time
+              input(type="text",value="").kintai_startTime
             td
-              input(type="text",value="").kintai_stop_time
+              input(type="text",value="").kintai_stopTime
             td
-              input(type="text",value="").kintai_type
+              input(type="text",value="").kintai_registType
