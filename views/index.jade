@@ -1,15 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  //a(href='/logout') logout
-  //a(href='/kintai') kintai
-  //p Welcome to #{user.family_name}
-  //p 名前
-  //  div #{user.name}
-  //p メールアドレス
-  //  div #{user.email}
-  //p 画像
-  //  img(src= user.picture)
-  //p 性別
-  //  div #{user.gender}
+  div.row
+    div#breadcrumb.col-xs-12
+      ol.breadcrumb
+        li
+          a(href='/') Home
+        li
+          a(href='#') Dashboard
+  div#dashboard-header.row
+    div.col-xs-10.col-sm-2
+      h1= title
+    div.col-xs-2.col-sm-1.col-sm-offset-1
