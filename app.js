@@ -65,6 +65,7 @@ var routes = require('./routes/index');
 var auths = require('./routes/auths');
 var users = require('./routes/users');
 var kintais = require('./routes/kintai');
+var yuukyuus = require('./routes/yuukyuu');
 
 
 // view engine setup
@@ -147,7 +148,7 @@ app.use('/', routes);
 app.use('/auth', auths);
 app.use('/users', users);
 app.use('/kintai', kintais);
-
+app.use('/yuukyuu', yuukyuus);
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
