@@ -39,3 +39,7 @@ $(function(){
   $("input").change(registCal);
   $().click(regist);
 });
+
+function DatePickers(){
+  $('.datepicker').datepicker({});
+}

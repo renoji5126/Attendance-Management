@@ -2104,7 +2104,6 @@ function CreateAllSliders(){
 // Function for make all Date-Time pickers on page
 //
 function AllTimePickers(){
-console.log("function zikkou");
 	$('#datetime_example').datetimepicker({});
 	$('#time_example').timepicker({
 		hourGrid: 4,
