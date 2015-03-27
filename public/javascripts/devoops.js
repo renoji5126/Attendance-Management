@@ -48,13 +48,10 @@ function LoadOpenLayersScript(callback){
 //
 function LoadTimePickerScript(callback){
 	if (!$.fn.timepicker){
-console.log("true");
 		$.getScript('/plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
 	}
 	else {
-console.log("else");
 		if (callback && typeof(callback) === "function") {
-console.log("callback");
 			callback();
 		}
 	}
@@ -2107,6 +2104,7 @@ function CreateAllSliders(){
 // Function for make all Date-Time pickers on page
 //
 function AllTimePickers(){
+console.log("function zikkou");
 	$('#datetime_example').datetimepicker({});
 	$('#time_example').timepicker({
 		hourGrid: 4,
