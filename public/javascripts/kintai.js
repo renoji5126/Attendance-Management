@@ -43,3 +43,6 @@ $(function(){
 function DatePickers(){
   $('.datepicker').datepicker({});
 }
+function SelectMenus(){
+  $('.selectmenu').selectmenu();
+}
