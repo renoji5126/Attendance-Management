@@ -48,10 +48,13 @@ function LoadOpenLayersScript(callback){
 //
 function LoadTimePickerScript(callback){
 	if (!$.fn.timepicker){
+console.log("true");
 		$.getScript('/plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
 	}
 	else {
+console.log("else");
 		if (callback && typeof(callback) === "function") {
+console.log("callback");
 			callback();
 		}
 	}
