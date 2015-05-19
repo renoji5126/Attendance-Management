@@ -46,7 +46,7 @@ router.get('/', function(req, res) {
  * チェックした日付の処理を振り分ける
  */
 function registTypefind(registDay, userid, resultCb , noResultCb){
-  model.findOne(
+  return model.findOne(
     {   // query
       registDay  : registDay,
       googleId   : userid,
@@ -57,12 +57,12 @@ function registTypefind(registDay, userid, resultCb , noResultCb){
     },function(err, result){
       //console.log(result);
       if(result){
-        resultCb(err, result);
+        return resultCb(err, result);
       }else{
-        noResultCb(err, result);
+        return noResultCb(err, result);
       {
   });
-}
+};
 
 function ykconsumeDayfind(registDay, userid, remain, cb){
   var ago = new Date(registDay);
