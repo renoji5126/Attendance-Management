@@ -60,7 +60,7 @@ function registTypefind(registDay, userid, resultCb , noResultCb){
         return resultCb(err, result);
       }else{
         return noResultCb(err, result);
-      {
+      }
   });
 };
 
