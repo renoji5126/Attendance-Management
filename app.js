@@ -27,6 +27,7 @@ mongoose.connect(url, function(err){
 
 var userInfo = new mongoose.Schema({
   googleId : String,
+//社員ID的なのひとつ欲しい
   email    : {type: String, default: null},
   name     : {type: String, default: null},
   picture  : {type: String, default: null},
