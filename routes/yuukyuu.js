@@ -71,11 +71,12 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
     googleId  : userid,
     registDay : { $gte : ago , $lte : registDay },
     remains   : { $gte  : remain }
-  },{ // view
-    _id : 1
+  //},{ // view
+  //  _id : 1
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
+    console.log("result!!!!!!!!!!!!!!!!!!",re);
     cb(err, result);
   });
 }
@@ -231,11 +232,13 @@ router.post('/', function(req, res) {
         if(req.body.syurui.match(/(有給)/).length){
           console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
           ykconsumeDayfind(registDay, userid, syurui.day, function(err, re){
+            console.log("aaaaa",re);
             cb(err, re);
           });
         }else if(req.body.syurui.match(/(代休)/).length){
           console.log("選択された申請休暇が代休だったのでカウントダウン対象のレコードを探索します");
           dkconsumeDayfind(registDay, userid, function(err, re){
+            console.log("aaaaa",re);
             cb(err, re);
           });
         }else{
