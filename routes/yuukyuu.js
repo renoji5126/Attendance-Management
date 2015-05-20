@@ -71,8 +71,7 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
     googleId  : userid,
     registDay : { $gte : ago , $lte : registDay },
     remains   : { $gte  : remain }
-  //},{ // view
-  //  _id : 1
+  },{ // view
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
