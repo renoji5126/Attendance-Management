@@ -28,12 +28,13 @@ mongoose.connect(url, function(err){
 var userInfo = new mongoose.Schema({
   googleId : String,
 //社員ID的なのひとつ欲しい
-  email    : {type: String, default: null},
-  name     : {type: String, default: null},
-  picture  : {type: String, default: null},
-  plan     : {type: Number, default: 7.75},
-  entryDate: {type: Date  , default: null},
-  className: {type: Array , default: []},
+  email    : {type: String , default: null},
+  name     : {type: String , default: null},
+  picture  : {type: String , default: null},
+  plan     : {type: Number , default: 7.75},
+  entryDate: {type: Date   , default: null},
+  className: {type: Array  , default: []},
+  admin    : {type: Boolean, default: false},
 },{ collection : conf.mongodbInfo.collectionName_user });
 app.userInfoModel = mongoose.model( conf.mongodbInfo.collectionName_user , userInfo );
 

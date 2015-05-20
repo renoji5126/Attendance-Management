@@ -14,7 +14,7 @@ var ykSchema = new mongoose.Schema({
     googleId   : String,
     //registType : {type : String, default: "有給休暇" },
     remains    : {type : Number, default: 0 },
-    ccurrences : {type : Number, default: 0 }
+    "発生日数" : {type : Number, default: 0 }
 });
 var model = mongoose.model( "取得休暇" , schema );
 var ykmodel = mongoose.model( "有給休暇" , ykSchema );
@@ -40,6 +40,15 @@ var dbsyurui =[{
 router.get('/', function(req, res) {
   res.render('yuukyuu', { title: '休暇申請',syurui: dbsyurui });
 });
+
+/*
+ *
+ *
+ *
+ */
+var error;
+var error.toJson = function (statusCode, message, res){
+}
 
 /*
  * 同じ日付に登録がされているかチェックする。
@@ -143,7 +152,7 @@ router.post('/', function(req, res) {
       // 種類が同一の場合処理を中断して返す
       if(req.body.syurui === result.syurui){
         console.log("既に登録されています。");
-        return res.json({msg : "既に登録されています。"});
+        return res.status(400).json({msg : "既に登録されています。"});
       }else{
         async.waterfall([
           function(cb){
@@ -212,7 +221,7 @@ router.post('/', function(req, res) {
           // 描画処理
           if(err){
             console.log(err);
-            return res.json(err);
+            return res.status(500).json(err);
           }else{
             console.log(arg);
             return res.json({msg : "success"});
@@ -222,7 +231,7 @@ router.post('/', function(req, res) {
     }, function(err, result){
       if(err){ 
         console.log(err);
-        return res.json(err);
+        return res.status(500).json(err);
       }
       // 登録なしなので登録する有給または第休の場合の処理とそれ以外の処理とわける。
 
@@ -262,7 +271,7 @@ router.post('/', function(req, res) {
       }],function(err,arg){
         if(err){ 
           console.log(err);
-          return res.json(err);
+          return res.status(500).json(err);
         }else{
           console.log(arg);
           res.json({msg: "success"});
@@ -270,8 +279,47 @@ router.post('/', function(req, res) {
       });
     });
   }else{
-    res.json({msg: "登録がない情報です"});
+    return res.status(400).json(new Error("登録がない情報です"));
   }
 });
 
+//var ykSchema = new mongoose.Schema({
+//    registDay  : Date,
+//    googleId   : String,
+//    //registType : {type : String, default: "有給休暇" },
+//    remains    : {type : Number, default: 0 },
+//    "発生日数" : {type : Number, default: 0 }
+//});
+router.post('/ykreg', function(req, res) {
+  //req.body= { syurui: '有給', date: '03/31/2015' }
+  var registDay = new Date(req.body.date);
+  var userid = req.session.passport.user.id;
+  var nissuu = req.body.nissuu
+  if(req.session.passport.user.admin){
+    ykmodel.findOne({
+      registDay : registDay,
+      googleId  : userid,
+    }, function(err, result){
+      if(err){ return res.status(500).json(err); }
+      if(Object.key(result).length){
+        var sa = nissuu - result["発生日数"];
+        result["発生日数"] = nissuu;
+        result.remains = remains + sa;
+        var msg = "";
+        if( 0 < result.remains ){
+          return result.save(function(err, result){
+            if(err){return res.status(500).json(err);}
+            return res.json({msg: "Success"});
+          });
+        }else{
+          return res.status(400).json(new Error("残数が０以下になるような変更はできません"));
+        }
+      }else{
+      }
+    });
+    res.json();
+  }else{
+    res.status(403).json(new Error("権限がありません"));
+  }
+});
 module.exports = router;
