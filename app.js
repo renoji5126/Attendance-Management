@@ -121,6 +121,7 @@ passport.use(
           result.name    = profile._json.name;
           result.picture = profile._json.picture;
           result.save(function(err, re){
+            console.log(re);
             done(err, result);
           });
         }else{
@@ -131,6 +132,7 @@ passport.use(
             picture  : profile._json.picture,
           });
           insert.save(function(err, re){
+            console.log(re);
             done(err, insert);
           });
         }
