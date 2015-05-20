@@ -16,9 +16,9 @@ var ykSchema = new mongoose.Schema({
     remains    : {type : Number, default: 0 },
     "発生日数" : {type : Number, default: 0 }
 });
-var model = mongoose.model( "取得休暇" , schema );
-var ykmodel = mongoose.model( "有給休暇" , ykSchema );
-var dkmodel = mongoose.model( "振替休暇" , ykSchema );
+var model = mongoose.model( "syutoku" , schema );
+var ykmodel = mongoose.model( "yuukyuu" , ykSchema );
+var dkmodel = mongoose.model( "syukkin" , ykSchema );
 var dbsyurui =[{
     name:'有給(全休)'
     ,day:1.0
