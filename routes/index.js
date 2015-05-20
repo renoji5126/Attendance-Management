@@ -5,7 +5,7 @@ var userModel = module.parent.userInfoModel;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('layout', { title: '勤怠Web管理' , user: req.session.passport.user._json });
+  res.render('layout', { title: '勤怠Web管理' , user: req.session.passport.user });
 });
 
 
