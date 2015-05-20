@@ -1,4 +1,4 @@
-var exeress = require('express');
+var express = require('express');
 var async = require('async');
 var router = express.Router();
 var mongoose = module.parent.exports.mongoose;
