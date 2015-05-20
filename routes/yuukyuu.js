@@ -128,7 +128,7 @@ router.post('/', function(req, res) {
   var syurui = null;
   for(var i = 0; i < dbsyurui.length; i++){
     if(dbsyurui[i].name === req.body.syurui){
-      syurui = val;
+      syurui = dbsyurui[i];
     }
   }
 
