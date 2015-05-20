@@ -125,11 +125,11 @@ passport.use(
           });
         }else{
           var insert = new app.userInfoModel({
-            googleId: profile._json.id,
-            email   : profile._json.email,
-            name    : profile._json.name,
-            picture : profile._json.picture,
-          };
+            googleId : profile._json.id,
+            email    : profile._json.email,
+            name     : profile._json.name,
+            picture  : profile._json.picture,
+          });
           insert.save(function(err, re){
             done(err, re);
           });
