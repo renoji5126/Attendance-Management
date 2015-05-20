@@ -121,7 +121,7 @@ passport.use(
           result.name    = profile._json.name;
           result.picture = profile._json.picture;
           result.save(function(err, re){
-            done(err, re);
+            done(err, result);
           });
         }else{
           var insert = new app.userInfoModel({
@@ -131,7 +131,7 @@ passport.use(
             picture  : profile._json.picture,
           });
           insert.save(function(err, re){
-            done(err, re);
+            done(err, insert);
           });
         }
       }
