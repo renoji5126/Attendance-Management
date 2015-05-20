@@ -124,8 +124,8 @@ passport.use(
       },
       { upsert: true },
       function(err, result) {
-        var profile.admin = result.admin;
-        done(err, profile);
+        console.log(result);
+        done(err, result);
       }
     );
   })
