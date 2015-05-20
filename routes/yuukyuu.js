@@ -42,15 +42,6 @@ router.get('/', function(req, res) {
 });
 
 /*
- *
- *
- *
- */
-var error;
-var error.toJson = function (statusCode, message, res){
-}
-
-/*
  * 同じ日付に登録がされているかチェックする。
  * チェックした日付の処理を振り分ける
  */
