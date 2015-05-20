@@ -115,7 +115,7 @@ passport.use(
     app.userInfoModel.findOne({
         googleId: profile._json.id 
       },function(err, result) {
-        if(Object.keys(result).length){
+        if(result){
           result.googleId= profile._json.id;
           result.email   = profile._json.email;
           result.name    = profile._json.name;
