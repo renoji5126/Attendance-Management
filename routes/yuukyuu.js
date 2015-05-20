@@ -286,6 +286,7 @@ router.post('/ykreg', function(req, res) {
   var registDay = new Date(req.body.date);
   var userid = req.session.passport.user.id;
   var nissuu = parseInt(req.body.nissuu);
+  console.log(req.session.passport);
   if(req.session.passport.user.admin){
     ykmodel.findOne({
       registDay : registDay,

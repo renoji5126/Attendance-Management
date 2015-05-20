@@ -123,7 +123,8 @@ passport.use(
         }
       },
       { upsert: true },
-      function(err) {
+      function(err, result) {
+        var profile.admin = result.admin;
         done(err, profile);
       }
     );
