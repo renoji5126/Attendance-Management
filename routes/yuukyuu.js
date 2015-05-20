@@ -75,7 +75,6 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
-    console.log("result!!!!!!!!!!!!!!!!!!",result);
     cb(err, result);
   });
 }
