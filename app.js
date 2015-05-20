@@ -112,21 +112,28 @@ passport.use(
     callbackURL : googleConfig.javascript_origins[0] + 'auth/google/return',
   },
   function(accessToken, refreshToken, profile, done) {
-    app.userInfoModel.update(
-      { googleId: profile._json.id },
-      { $setOnInsert: 
-        {
-          googleId: profile._json.id,
-          email   : profile._json.email,
-          name    : profile._json.name,
-          picture : profile._json.picture,
+    app.userInfoModel.findOne({
+        googleId: profile._json.id 
+      },function(err, result) {
+        if(Object.keys(result).length){
+          result.googleId= profile._json.id;
+          result.email   = profile._json.email;
+          result.name    = profile._json.name;
+          result.picture = profile._json.picture;
+          result.save(function(err, re){
+            done(err, re);
+          });
+        }else{
+          var insert = new app.userInfoModel({
+            googleId: profile._json.id,
+            email   : profile._json.email,
+            name    : profile._json.name,
+            picture : profile._json.picture,
+          };
+          insert.save(function(err, re){
+            done(err, re);
+          });
         }
-      },
-      { upsert: true },
-      function(err, result) {
-        console.log(result);
-        console.log(profile);
-        done(err, result);
       }
     );
   })
