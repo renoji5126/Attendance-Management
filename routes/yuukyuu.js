@@ -293,7 +293,7 @@ router.post('/ykreg', function(req, res) {
       googleId  : userid,
     }, function(err, result){
       if(err){ return res.status(500).json(err); }
-      if(Object.key(result).length){
+      if(Object.keys(result).length){
         var sa = nissuu - result["発生日数"];
         result["発生日数"] = nissuu;
         result.remains = remains + sa;
