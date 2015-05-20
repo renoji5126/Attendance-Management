@@ -241,8 +241,8 @@ router.post('/', function(req, res) {
           cb(null, null);
         }
       },function(record, cb){
-        if(result.syurui.match(/(有給|代休)/).length && record){
-          console.log("変更先が有給または代休だったのでカウントアップ処理を行います");
+        if(req.body.syurui.match(/(有給|代休)/).length && record){
+          console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
           countCalc(record, -syurui.day, function(err, re){
             cb(err, re.registDay);
           });
