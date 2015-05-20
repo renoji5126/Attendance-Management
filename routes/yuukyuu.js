@@ -167,7 +167,7 @@ router.post('/', function(req, res) {
             //既に登録されていた種類が有給または代休だった時
             if(result.syurui.match(/(有給|代休)/).length && record){
               console.log("変更先が有給または代休だったのでカウントアップ処理を行います");
-              countCalc(record, syurui.day, function(err, re){
+              countCalc(record, syurui.day, function(err, re);
                 cb(err);
               });
             }else{
@@ -244,7 +244,7 @@ router.post('/', function(req, res) {
         if(req.body.syurui.match(/(有給|代休)/).length && record){
           console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
           countCalc(record, -syurui.day, function(err, re){
-            cb(err, re.registDay);
+            cb(err);
           });
         }else{
           cb(new Error('対象になるレコードが存在しません'));
