@@ -110,6 +110,7 @@ function dkconsumeDayfind(registDay, userid, cb){
 function countCalc(record, count, cb){
   record.remains = record.remains + count;
   //残数が０以上なら通す
+  console.log(record, count);
   if(record.remains >= 0){
     record.save(function(err, result){
       cb(err, result);
