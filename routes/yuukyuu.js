@@ -285,7 +285,7 @@ router.post('/ykreg', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   var registDay = new Date(req.body.date);
   var userid = req.session.passport.user.id;
-  var nissuu = req.body.nissuu
+  var nissuu = parseInt(req.body.nissuu);
   if(req.session.passport.user.admin){
     ykmodel.findOne({
       registDay : registDay,
@@ -296,7 +296,6 @@ router.post('/ykreg', function(req, res) {
         var sa = nissuu - result["発生日数"];
         result["発生日数"] = nissuu;
         result.remains = remains + sa;
-        var msg = "";
         if( 0 < result.remains ){
           return result.save(function(err, result){
             if(err){return res.status(500).json(err);}
@@ -306,9 +305,18 @@ router.post('/ykreg', function(req, res) {
           return res.status(400).json(new Error("残数が０以下になるような変更はできません"));
         }
       }else{
+        var insert = new ykmodel({
+                       registDay : registDay,
+                       googleId  : userid,
+                       remains   : nissuu,
+                       "発生日数": nissuu,
+                     });
+        return insert.save(function(err, result){
+          if(err){return res.status(500).json(err);}
+          return res.json({msg: "Success"});
+        });
       }
     });
-    res.json();
   }else{
     res.status(403).json(new Error("権限がありません"));
   }

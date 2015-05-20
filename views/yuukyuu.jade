@@ -23,6 +23,24 @@ div.row-fluid
             button.btn.btn-primary.btn-label-left(type='submit') Submit
               span
                 i.fa.fa-clock-o
+  div.col-xs-12.col-sm-10
+    div.box-content
+      form.form-horizontal(action='/yuukyuu/ykreg',method='POST')
+        div.form-group
+          label.col-sm-2.control-label(for='select') 付与日数
+          div.col-sm-8
+            select(name='nissuu').selectmenu
+              - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
+              for i in nisu
+                option= i
+          label.col-sm-2.control-label(for='date') 日付
+          div.col-sm-8
+            input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+          div.col-sm-offset-2.col-sm-4
+            button.btn.btn-primary.btn-label-left(type='submit') Submit
+              span
+                i.fa.fa-clock-o
+
 script(type='text/javascript').
   $(document).ready(function(){
     LoadTimePickerScript(DatePickers);
