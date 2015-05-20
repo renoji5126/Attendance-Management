@@ -125,6 +125,7 @@ passport.use(
       { upsert: true },
       function(err, result) {
         console.log(result);
+        console.log(profile);
         done(err, result);
       }
     );
