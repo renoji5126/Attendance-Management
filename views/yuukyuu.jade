@@ -62,7 +62,7 @@ div.row-fluid
             th アーカイブフラグ
             th 申請休暇種別
         tbody
-          for(i in db["申請済み有給"])
+          for(data in db["申請済み有給"])
             tr
               td= data.registDay
               td= data.consumeDay
