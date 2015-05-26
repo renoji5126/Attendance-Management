@@ -65,7 +65,7 @@ router.get('/', function(req, res) {
             dkmodel.find(query,{},{
                            sort  : {registDay: 1},
                          },function(err, result){
-              db['申請済み代休'] = result;
+              db['休日出勤'] = result;
               plcb(err, result);
             });
           },function(plcb){
@@ -73,7 +73,7 @@ router.get('/', function(req, res) {
                          sort  : {registDay: 1},
                          limit : 10
                        },function(err, result){
-              db['申請済み有給'] = result;
+              db['申請済み休暇'] = result;
               plcb(err, result);
             });
           //},function(plcb){

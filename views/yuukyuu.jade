@@ -63,8 +63,6 @@ div.row-fluid
             th 申請休暇種別
         tbody
           for(i in db["申請済み有給"])
-            +row(i)
-          mixin row(data)
             tr
               td= data.registDay
               td= data.consumeDay
