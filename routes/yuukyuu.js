@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
             });
           },function(plcb){
             model.find(query,{},{
-                         sort  : {registDay: 1},
+                         sort  : {registDay: -1},
                          limit : 10
                        },function(err, result){
               db['申請済み休暇'] = result;
