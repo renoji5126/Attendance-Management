@@ -289,6 +289,7 @@ router.post('/', function(req, res) {
           googleId   : userid,
           syurui     : syurui.name
         });
+        cb(null);
       },function(cb){
         if(req.body.syurui.match(/(有給)/).length){
           console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
