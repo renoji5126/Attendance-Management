@@ -6,71 +6,74 @@ div.row
 
 div.row
   div.col-xs-12.col-sm-6
-    div.box-header
-      div.box-name
-        i.fa.fa-magic
-        span 休暇申請フォーム
-    div.box-content
-      form.form-horizontal(action='/yuukyuu/',method='POST')
-        div.form-group
-          label.col-sm-2.control-label(for='select') 種別
-          div.col-sm-10
-            select(name='syurui').selectmenu
-              for i in syurui
-                option= i.name 
-          label.col-sm-2.control-label(for='date') 日付
-          div.col-sm-4
-            input.datepicker.form-control(type='text',name='date',placeholder='休む日を入力')
-          div.col-sm-offset-2.col-sm-10
-            button.btn.btn-primary.btn-label-left(type='submit') Submit
-              span
-                i.fa.fa-clock-o
+    div.box
+      div.box-header
+        div.box-name
+          i.fa.fa-magic
+          span 休暇申請フォーム
+      div.box-content
+        form.form-horizontal(action='/yuukyuu/',method='POST')
+          div.form-group
+            label.col-sm-2.control-label(for='select') 種別
+            div.col-sm-10
+              select(name='syurui').selectmenu
+                for i in syurui
+                  option= i.name 
+            label.col-sm-2.control-label(for='date') 日付
+            div.col-sm-4
+              input.datepicker.form-control(type='text',name='date',placeholder='休む日を入力')
+            div.col-sm-offset-2.col-sm-10
+              button.btn.btn-primary.btn-label-left(type='submit') Submit
+                span
+                  i.fa.fa-clock-o
   div.col-xs-12.col-sm-6
-    div.box-header
-      div.box-name
-        i.fa.fa-magic
-        span 有給休暇付加フォーム
-    div.box-content
-      form.form-horizontal(action='/yuukyuu/ykreg',method='POST')
-        div.form-group
-          label.col-sm-2.control-label(for='select') 付与日数
-          div.col-sm-10
-            select(name='nissuu').selectmenu
-              - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
-              for i in nisu
-                option= i
-          label.col-sm-2.control-label(for='date') 日付
-          div.col-sm-4
-            input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
-          div.col-sm-offset-2.col-sm-10
-            button.btn.btn-primary.btn-label-left(type='submit') Submit
-              span
-                i.fa.fa-clock-o
+    div.box
+      div.box-header
+        div.box-name
+          i.fa.fa-magic
+          span 有給休暇付加フォーム
+      div.box-content
+        form.form-horizontal(action='/yuukyuu/ykreg',method='POST')
+          div.form-group
+            label.col-sm-2.control-label(for='select') 付与日数
+            div.col-sm-10
+              select(name='nissuu').selectmenu
+                - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
+                for i in nisu
+                  option= i
+            label.col-sm-2.control-label(for='date') 日付
+            div.col-sm-4
+              input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+            div.col-sm-offset-2.col-sm-10
+              button.btn.btn-primary.btn-label-left(type='submit') Submit
+                span
+                  i.fa.fa-clock-o
 div.row
   div.col-xs-12.col-sm-6
-    div.box-header
-      div.box-name
-        i.fa.fa-magic
-        span 登録済み申請
-    div.box-content
-      table.table.table-striped
-        thead
-          tr
-            th 休暇日
-            th 消化有給日
-            th アーカイブフラグ
-            th 申請休暇種別
-        tbody
-          if(db['申請済み休暇'].length)
-            for data in db['申請済み休暇']
-              tr
-                td= new Date(data.registDay).toLocaleDateString()
-                if(data.consumeDay)
-                  td= new Date(data.consumeDay).toLocaleDateString()
-                else
-                  td
-                td= data.archive
-                td= data.syurui
+    div.box
+      div.box-header
+        div.box-name
+          i.fa.fa-magic
+          span 登録済み申請
+      div.box-content
+        table.table.table-striped
+          thead
+            tr
+              th 休暇日
+              th 消化有給日
+              th アーカイブフラグ
+              th 申請休暇種別
+          tbody
+            if(db['申請済み休暇'].length)
+              for data in db['申請済み休暇']
+                tr
+                  td= new Date(data.registDay).toLocaleDateString()
+                  if(data.consumeDay)
+                    td= new Date(data.consumeDay).toLocaleDateString()
+                  else
+                    td
+                  td= data.archive
+                  td= data.syurui
 
 
 script(type='text/javascript').
