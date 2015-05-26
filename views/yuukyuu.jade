@@ -47,6 +47,31 @@ div.row-fluid
               span
                 i.fa.fa-clock-o
 
+
+  div.col-xs-12.col-sm-6
+    div.box-header
+      div.box-name
+        i.fa.fa-magic
+        span 登録済み申請
+    div.box-content
+      table.table-striped
+        thead
+          tr
+            th 休暇日
+            th 消化有給日
+            th アーカイブフラグ
+            th 申請休暇種別
+        tbody
+          for(i in db["申請済み有給"])
+            +row(i)
+          mixin row(data)
+            tr
+              td= data.registDay
+              td= data.consumeDay
+              td= data.archive
+              td= data.syurui
+
+
 script(type='text/javascript').
   $(document).ready(function(){
     LoadTimePickerScript(DatePickers);

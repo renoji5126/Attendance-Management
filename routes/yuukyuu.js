@@ -2,19 +2,22 @@ var express = require('express');
 var async = require('async');
 var router = express.Router();
 var mongoose = module.parent.exports.mongoose;
+var userinfo = module.parent.exports.userInfoModel;
 var schema = new mongoose.Schema({
     registDay  : Date,
     googleId   : String,
     //registType : {type : String, default: "申請休暇" },
     consumeDay : Date,
+    archive    : {type : Boolean, default: false },
     syurui     : {type : String, default: null }
 });
 var ykSchema = new mongoose.Schema({
     registDay  : Date,
     googleId   : String,
     //registType : {type : String, default: "有給休暇" },
-    remains    : {type : Number, default: 0 },
-    "発生日数" : {type : Number, default: 0 }
+    remains    : {type : Number,  default: 0 },
+    archive    : {type : Boolean, default: false },
+    "発生日数" : {type : Number,  default: 0 }
 });
 var model = mongoose.model( "syutoku" , schema );
 var ykmodel = mongoose.model( "yuukyuu" , ykSchema );
@@ -38,7 +41,60 @@ var dbsyurui =[{
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('yuukyuu', { title: '休暇申請',syurui: dbsyurui });
+  var options = { title: '休暇申請',syurui: dbsyurui };
+  if(req.session.passport.user.admin){
+    var query = {  
+      archive   : false,
+      googleId  : req.session.passport.user.id
+    }:
+    async.waterfall([
+      function(wfcb){
+         //初期化
+         var db = new Object();
+         wfcb(null, db);
+      },function(db, wfcb){
+        async.parallel([
+          function(plcb){
+            ykmodel.find(query,{},{
+                           sort  : {registDay: 1},
+                         },function(err, result){
+              db['有給休暇'] = result;
+              plcb(err, result);
+            });
+          },function(plcb){
+            dkmodel.find(query,{},{
+                           sort  : {registDay: 1},
+                         },function(err, result){
+              db['申請済み代休'] = result;
+              plcb(err, result);
+            });
+          },function(plcb){
+            model.find(query,{},{
+                         sort  : {registDay: 1},
+                         limit : 10
+                       },function(err, result){
+              db['申請済み有給'] = result;
+              plcb(err, result);
+            });
+          //},function(plcb){
+          }],function(err, results){
+            if(err){
+              return wfcb(err, null);
+            }
+            console.log(db, results);
+            return wfcb(null, db);
+          }
+        );
+      //},function(wfcb){
+      },function(db, wfcb){
+        options.db = db;
+        wfcb(null);
+      }],function(err){
+        return res.render('yuukyuu', options);
+      });
+  }else{
+    return res.render('yuukyuu', options);
+  }
 });
 
 /*
