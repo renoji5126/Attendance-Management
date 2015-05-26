@@ -311,7 +311,7 @@ router.post('/', function(req, res) {
         // insert処理
         var insert = new model({
           registDay  : registDay,
-          googleId   : userid,
+          googleId   : userid.toString(),
           syurui     : syurui.name
         });
         insert.save(function(err, re){
