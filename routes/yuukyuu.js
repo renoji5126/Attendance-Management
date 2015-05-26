@@ -175,6 +175,7 @@ function countCalc(record, count, cb){
 router.post('/', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   var registDay = new Date(req.body.date);
+  var comment = new Date(req.body.comment);
   var userid = req.session.passport.user.googleId;
   //var model = mongoose.model( req.session.passport.user.id , schema );
 //登録されている種類かどうかチェックしてから処理開始
@@ -257,6 +258,7 @@ router.post('/', function(req, res) {
             }
             // update処理
             result.syurui = req.body.syurui;
+            result.comment= comment;
             result.save(function(err, result){
               cb(null, result)
             });
@@ -284,7 +286,8 @@ router.post('/', function(req, res) {
         insert = new model({
           registDay  : registDay,
           googleId   : userid,
-          syurui     : syurui.name
+          syurui     : syurui.name,
+          comment    : comment
         });
         cb(null);
       },function(cb){
