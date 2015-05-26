@@ -46,7 +46,7 @@ router.get('/', function(req, res) {
     var query = {  
       archive   : false,
       googleId  : req.session.passport.user.id
-    }:
+    };
     async.waterfall([
       function(wfcb){
          //初期化
