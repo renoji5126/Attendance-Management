@@ -63,14 +63,12 @@ div.row-fluid
             th 申請休暇種別
         tbody
           if(db['申請済み休暇'].length)
-            for(data in db['申請済み休暇'])
+            for data in db['申請済み休暇']
               tr
-                td= JSON.stringify(data)
-                td= JSON.stringify(db['申請済み休暇'])
-                //td= data.registDay
-                //td= data.consumeDay
-                //td= data.archive
-                //td= data.syurui
+                td= data.registDay
+                td= data.consumeDay
+                td= data.archive
+                td= data.syurui
 
 
 script(type='text/javascript').
