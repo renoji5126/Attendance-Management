@@ -9,7 +9,8 @@ var schema = new mongoose.Schema({
     //registType : {type : String, default: "申請休暇" },
     consumeDay : Date,
     archive    : {type : Boolean, default: false },
-    syurui     : {type : String, default: null }
+    syurui     : {type : String, default: null },
+    comment    : {type : String, default: "" }
 });
 var ykSchema = new mongoose.Schema({
     registDay  : Date,
