@@ -175,7 +175,7 @@ function countCalc(record, count, cb){
 router.post('/', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   var registDay = new Date(req.body.date);
-  var comment = new Date(req.body.comment);
+  var comment = req.body.comment;
   var userid = req.session.passport.user.googleId;
   //var model = mongoose.model( req.session.passport.user.id , schema );
 //登録されている種類かどうかチェックしてから処理開始
