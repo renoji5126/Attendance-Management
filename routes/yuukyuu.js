@@ -42,59 +42,55 @@ var dbsyurui =[{
 /* GET home page. */
 router.get('/', function(req, res) {
   var options = { title: '休暇申請',syurui: dbsyurui };
-  if(req.session.passport.user.admin){
-    var query = {  
-      archive   : false,
-      googleId  : req.session.passport.user.googleId
-    };
-    async.waterfall([
-      function(wfcb){
-         //初期化
-         var db = new Object();
-         wfcb(null, db);
-      },function(db, wfcb){
-        async.parallel([
-          function(plcb){
-            ykmodel.find(query,{},{
-                           sort  : {registDay: 1},
-                         },function(err, result){
-              db['有給休暇'] = result;
-              plcb(err, result);
-            });
-          },function(plcb){
-            dkmodel.find(query,{},{
-                           sort  : {registDay: 1},
-                         },function(err, result){
-              db['休日出勤'] = result;
-              plcb(err, result);
-            });
-          },function(plcb){
-            model.find(query,{},{
-                         sort  : {registDay: -1},
-                         limit : 10
+  var query = {  
+    archive   : false,
+    googleId  : req.session.passport.user.googleId
+  };
+  async.waterfall([
+    function(wfcb){
+       //初期化
+       var db = new Object();
+       wfcb(null, db);
+    },function(db, wfcb){
+      async.parallel([
+        function(plcb){
+          ykmodel.find(query,{},{
+                         sort  : {registDay: 1},
                        },function(err, result){
-              db['申請済み休暇'] = result;
-              plcb(err, result);
-            });
-          //},function(plcb){
-          }],function(err, results){
-            if(err){
-              return wfcb(err, null);
-            }
-            console.log(db, results);
-            return wfcb(null, db);
+            db['有給休暇'] = result;
+            plcb(err, result);
+          });
+        },function(plcb){
+          dkmodel.find(query,{},{
+                         sort  : {registDay: 1},
+                       },function(err, result){
+            db['休日出勤'] = result;
+            plcb(err, result);
+          });
+        },function(plcb){
+          model.find(query,{},{
+                       sort  : {registDay: -1},
+                       limit : 10
+                     },function(err, result){
+            db['申請済み休暇'] = result;
+            plcb(err, result);
+          });
+        //},function(plcb){
+        }],function(err, results){
+          if(err){
+            return wfcb(err, null);
           }
-        );
-      //},function(wfcb){
-      },function(db, wfcb){
-        options.db = db;
-        wfcb(null);
-      }],function(err){
-        return res.render('yuukyuu', options);
-      });
-  }else{
-    return res.render('yuukyuu', options);
-  }
+          console.log(db, results);
+          return wfcb(null, db);
+        }
+      );
+    //},function(wfcb){
+    },function(db, wfcb){
+      options.db = db;
+      wfcb(null);
+    }],function(err){
+      return res.render('yuukyuu', options);
+    });
 });
 
 /*
