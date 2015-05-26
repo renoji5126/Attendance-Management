@@ -65,9 +65,9 @@ div.row-fluid
           if(db["申請済み休暇"].length)
             for(data in db["申請済み休暇"])
               tr
-                td= data
+                td= JSON.stringify(data)
                 td= db
-                td= db.stringify
+                td= JSON.stringify(db)
                 //td= data.registDay
                 //td= data.consumeDay
                 //td= data.archive
