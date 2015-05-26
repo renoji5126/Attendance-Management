@@ -65,8 +65,8 @@ div.row-fluid
           if(db['申請済み休暇'].length)
             for data in db['申請済み休暇']
               tr
-                td= data.registDay
-                td= data.consumeDay
+                td= new Date(data.registDay).toLocaleDateString()
+                td= new Date(data.consumeDay).toLocaleDateString()
                 td= data.archive
                 td= data.syurui
 
