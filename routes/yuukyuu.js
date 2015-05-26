@@ -309,6 +309,7 @@ router.post('/', function(req, res) {
         if(req.body.syurui.match(/(有給|代休)/).length && record){
           console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
           countCalc(record, -syurui.day, function(err, re){
+            console.log("ddddddddd",re);
             insert.consumeDay = new Date(re.registDay);
             cb(err);
           });
