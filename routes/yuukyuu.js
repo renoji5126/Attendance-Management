@@ -19,9 +19,9 @@ var ykSchema = new mongoose.Schema({
     archive    : {type : Boolean, default: false },
     "発生日数" : {type : Number,  default: 0 }
 });
-var model = mongoose.model( "syutoku" , schema );
-var ykmodel = mongoose.model( "yuukyuu" , ykSchema );
-var dkmodel = mongoose.model( "syukkin" , ykSchema );
+var model = mongoose.model( "syutokus" , schema );
+var ykmodel = mongoose.model( "yuukyuus" , ykSchema );
+var dkmodel = mongoose.model( "syukkins" , ykSchema );
 var dbsyurui =[{
     name:'有給(全休)'
     ,day:1.0
@@ -311,7 +311,7 @@ router.post('/', function(req, res) {
         // insert処理
         var insert = new model({
           registDay  : registDay,
-          googleId   : userid.toString(),
+          googleId   : userid,
           syurui     : syurui.name
         });
         insert.save(function(err, re){
@@ -366,7 +366,7 @@ router.post('/ykreg', function(req, res) {
       }else{
         var insert = new ykmodel({
                        registDay : registDay,
-                       googleId  : userid.toString(),
+                       googleId  : userid,
                        remains   : nissuu,
                        "発生日数": nissuu,
                      });
