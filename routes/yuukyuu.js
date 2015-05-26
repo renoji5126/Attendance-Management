@@ -45,7 +45,7 @@ router.get('/', function(req, res) {
   if(req.session.passport.user.admin){
     var query = {  
       archive   : false,
-      googleId  : req.session.passport.user.id
+      googleId  : req.session.passport.user.googleId
     };
     async.waterfall([
       function(wfcb){
@@ -178,7 +178,7 @@ function countCalc(record, count, cb){
 router.post('/', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   var registDay = new Date(req.body.date);
-  var userid = req.session.passport.user.id;
+  var userid = req.session.passport.user.googleId;
   //var model = mongoose.model( req.session.passport.user.id , schema );
 //登録されている種類かどうかチェックしてから処理開始
   var syurui = null;
@@ -342,7 +342,7 @@ router.post('/', function(req, res) {
 router.post('/ykreg', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   var registDay = new Date(req.body.date);
-  var userid = req.session.passport.user.id;
+  var userid = req.session.passport.user.googleId;
   var nissuu = parseInt(req.body.nissuu);
   console.log(req.session.passport);
   if(req.session.passport.user.admin){
