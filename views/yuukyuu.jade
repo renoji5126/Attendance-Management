@@ -109,14 +109,14 @@ div.row
       div.box-header
         div.box-name
           i.fa.fa-magic
-          span 申請可能な休日出勤
+          span 休日出勤（未実装）
       div.box-content
         table.table.table-striped
           thead
             tr
               th 登録日
-              th 発生有給数
-              th 残有給数
+              th 勤務日数
+              th 残代休
               //th アーカイブ
           tbody
             if(db['休日出勤'].length)
