@@ -62,8 +62,8 @@ div.row-fluid
             th アーカイブフラグ
             th 申請休暇種別
         tbody
-          if(db["申請済み休暇"].length)
-            for(data in db["申請済み休暇"])
+          if(db['申請済み休暇'].length)
+            for(data in db['申請済み休暇'])
               tr
                 td= JSON.stringify(data)
                 td= db
