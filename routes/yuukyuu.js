@@ -281,8 +281,15 @@ router.post('/', function(req, res) {
         return res.status(500).json(err);
       }
       // 登録なしなので登録する有給または第休の場合の処理とそれ以外の処理とわける。
-
+      var insert;
       async.waterfall([function(cb){
+        // insert処理
+        insert = new model({
+          registDay  : registDay,
+          googleId   : userid,
+          syurui     : syurui.name
+        });
+      },function(cb){
         if(req.body.syurui.match(/(有給)/).length){
           console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
           ykconsumeDayfind(registDay, userid, syurui.day, function(err, re){
@@ -302,18 +309,13 @@ router.post('/', function(req, res) {
         if(req.body.syurui.match(/(有給|代休)/).length && record){
           console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
           countCalc(record, -syurui.day, function(err, re){
+            insert.consumeDay = new Date(re.registDay);
             cb(err);
           });
         }else{
           cb(new Error('対象になるレコードが存在しません'));
         }
       },function(cb){
-        // insert処理
-        var insert = new model({
-          registDay  : registDay,
-          googleId   : userid,
-          syurui     : syurui.name
-        });
         insert.save(function(err, re){
           cb(err, re);
         });
