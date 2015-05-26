@@ -366,7 +366,7 @@ router.post('/ykreg', function(req, res) {
       }else{
         var insert = new ykmodel({
                        registDay : registDay,
-                       googleId  : userid,
+                       googleId  : userid.toString(),
                        remains   : nissuu,
                        "発生日数": nissuu,
                      });
