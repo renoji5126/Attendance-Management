@@ -147,17 +147,17 @@ script(type='text/javascript').
       setTimeout(function(){
         console.log(url,method,data_object);
         $.ajax({
-          type : method,
-          url  : url,
-          data : data_object.
+          type     : method,
+          url      : url,
+          data     : data_object.
           dataType : "json",
           async    : true,
-          success  :function(msg){
-            LoadAjaxContent('/yuukyuu/');
+          success  : function(msg){
+            //LoadAjaxContent('/yuukyuu/');
           },
-          error    :function(XMLHttpRequest, textStatus, errorThrown){
+          error    : function(XMLHttpRequest, textStatus, errorThrown){
             console.log(XMLHttpRequest, textStatus, errorThrown);
-          },
+          }
         });
       }, 100);
     });
