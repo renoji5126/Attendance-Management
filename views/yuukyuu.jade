@@ -38,20 +38,19 @@ div.row
       div.box-content
         div.form-horizontal
           div.form-group(data-url='/yuukyuu/ykreg', data-method='POST')
-            div.form-group
-              label.col-sm-2.control-label(for='select') 付与日数
-              div.col-sm-10
-                select(name='nissuu').selectmenu
-                  - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
-                  for i in nisu
-                    option= i
-              label.col-sm-2.control-label(for='date') 日付
-              div.col-sm-10
-                input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
-              div.col-sm-offset-2.col-sm-10
-                button.btn.btn-primary.btn-label-left(type='submit') Submit
-                  span
-                    i.fa.fa-clock-o
+            label.col-sm-2.control-label(for='select') 付与日数
+            div.col-sm-10
+              select(name='nissuu').selectmenu
+                - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
+                for i in nisu
+                  option= i
+            label.col-sm-2.control-label(for='date') 日付
+            div.col-sm-10
+              input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+            div.col-sm-offset-2.col-sm-10
+              button.btn.btn-primary.btn-label-left(type='submit') Submit
+                span
+                  i.fa.fa-clock-o
 div.row
   div.col-xs-12.col-sm-6
     div.box
@@ -150,12 +149,16 @@ script(type='text/javascript').
         $.ajax({
           type : method,
           url  : url,
-          data : data_object
-        }).done(function(msg){
-          alert(msg);
+          data : data_object.
+          dataType : "json",
+          async    : true,
+          success  :function(msg){
+            LoadAjaxContent('/yuukyuu/');
+          },
+          error    :function(XMLHttpRequest, textStatus, errorThrown){
+            console.log(XMLHttpRequest, textStatus, errorThrown);
+          },
         });
       }, 100);
-    });
-    $('.form-group').each(function(i, val){
     });
   });
