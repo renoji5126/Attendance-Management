@@ -193,7 +193,7 @@ router.post('/', function(req, res) {
         console.log(err); 
         return res.json(err);
       }
-
+      console.log(result);
       // 種類が同一の場合処理を中断して返す
       if(req.body.syurui === result.syurui){
         console.log("既に登録されています。");
