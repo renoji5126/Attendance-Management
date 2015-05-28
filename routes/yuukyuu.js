@@ -197,7 +197,7 @@ router.post('/', function(req, res) {
         async.waterfall([
           function(cb){
             var query = { googleId  : userid,
-                          registDay : registDay };
+                          registDay : result.consumeDay };
             if(result.syurui.match(/(有給)/)){
               console.log("選択された申請休暇が有給だったのでカウントアップ対象のレコードを探索します");
               ykmodel.findOne(query,function(err, record){
