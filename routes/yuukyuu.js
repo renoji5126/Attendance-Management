@@ -361,10 +361,11 @@ router.post('/', function(req, res) {
 //});
 router.post('/ykreg', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
+  if(req.body.date){
   var registDay = new Date(req.body.date);
+  }else{ return res.status(400).json(new Error("日付を入力してください"));}
   var userid = req.session.passport.user.googleId;
   var nissuu = parseInt(req.body.nissuu);
-  console.log(req.session.passport);
   if(req.session.passport.user.admin){
     ykmodel.findOne({
       registDay : registDay,
