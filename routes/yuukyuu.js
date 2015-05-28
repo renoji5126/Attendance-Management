@@ -176,6 +176,7 @@ router.post('/', function(req, res) {
   //var model = mongoose.model( req.session.passport.user.id , schema );
 //登録されている種類かどうかチェックしてから処理開始
   var syurui = null;
+  var resyurui = null;
   for(var i = 0; i < dbsyurui.length; i++){
     if(dbsyurui[i].name === req.body.syurui){
       syurui = dbsyurui[i];
@@ -196,6 +197,15 @@ router.post('/', function(req, res) {
       }else{
         async.waterfall([
           function(cb){
+            if(result.syurui.match(/(有給|代休)/)){
+              for(var i = 0; i < dbsyurui.length; i++){
+                if(dbsyurui[i].name === result.syurui){
+                  resyurui = dbsyurui[i];
+                }
+                if(i === dbsyurui.length - 1){ cb(); }
+              }
+            }else{ cb(); }
+          },function(cb){
             var query = { googleId  : userid,
                           registDay : result.consumeDay };
             if(result.syurui.match(/(有給)/)){
@@ -229,12 +239,12 @@ router.post('/', function(req, res) {
           },function(cb){
             if(req.body.syurui.match(/(有給)/)){
               console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
-              ykconsumeDayfind(registDay, userid, syurui.day, function(err, re){
+              ykconsumeDayfind(registDay, userid, resyurui.day, function(err, re){
                 cb(err, re);
               });
             }else if(req.body.syurui.match(/(代休)/)){
               console.log("選択された申請休暇が代休だったのでカウントダウン対象のレコードを探索します");
-              dkconsumeDayfind(registDay, userid, syurui.day, function(err, re){
+              dkconsumeDayfind(registDay, userid, resyurui.day, function(err, re){
                 cb(err, re);
               });
             }else{
