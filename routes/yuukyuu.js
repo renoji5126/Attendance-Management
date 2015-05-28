@@ -227,7 +227,7 @@ router.post('/', function(req, res) {
             if(result.syurui.match(/(有給|代休)/)){
               if(record){
                 console.log("変更先が有給または代休だったのでカウントアップ処理を行います");
-                countCalc(record, syurui.day, function(err, re){
+                countCalc(record, resyurui.day, function(err, re){
                   cb(err);
                 });
               }else{
@@ -239,12 +239,12 @@ router.post('/', function(req, res) {
           },function(cb){
             if(req.body.syurui.match(/(有給)/)){
               console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
-              ykconsumeDayfind(registDay, userid, resyurui.day, function(err, re){
+              ykconsumeDayfind(registDay, userid, syurui.day, function(err, re){
                 cb(err, re);
               });
             }else if(req.body.syurui.match(/(代休)/)){
               console.log("選択された申請休暇が代休だったのでカウントダウン対象のレコードを探索します");
-              dkconsumeDayfind(registDay, userid, resyurui.day, function(err, re){
+              dkconsumeDayfind(registDay, userid, function(err, re){
                 cb(err, re);
               });
             }else{
