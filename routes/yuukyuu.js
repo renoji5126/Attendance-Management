@@ -219,11 +219,15 @@ router.post('/', function(req, res) {
             }
           },function(record, cb){
             //既に登録されていた種類が有給または代休だった時
-            if(result.syurui.match(/(有給|代休)/) && record){
-              console.log("変更先が有給または代休だったのでカウントアップ処理を行います");
-              countCalc(record, syurui.day, function(err, re){
-                cb(err);
-              });
+            if(result.syurui.match(/(有給|代休)/)){
+              if(record){
+                console.log("変更先が有給または代休だったのでカウントアップ処理を行います");
+                countCalc(record, syurui.day, function(err, re){
+                  cb(err);
+                });
+              }else{
+                cb(new Error('対象になるレコードが存在しません'));
+              }
             }else{
               cb(null);
             }
@@ -244,11 +248,15 @@ router.post('/', function(req, res) {
             }
           },function(record, cb){
             //これから登録する種類が有給または代休だった時
-            if(req.body.syurui.match(/(有給|代休)/) && record){
-              console.log("選択された申請休暇が有給または代休だったのでカウントアップ処理を行います");
-              countCalc(record, -syurui.day, function(err, re){
-                cb(err, re.registDay);
-              });
+            if(req.body.syurui.match(/(有給|代休)/)){
+              if(record){
+                console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
+                countCalc(record, -syurui.day, function(err, re){
+                  cb(err, re.registDay);
+                });
+              }else{
+                cb(new Error('対象になるレコードが存在しません'));
+              }
             }else{
               cb(null, null);
             }
@@ -307,15 +315,18 @@ router.post('/', function(req, res) {
           cb(null, null);
         }
       },function(record, cb){
-        if(req.body.syurui.match(/(有給|代休)/) && record){
-          console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
-          countCalc(record, -syurui.day, function(err, re){
-            console.log("ddddddddd",re);
-            insert.consumeDay = new Date(re.registDay);
-            cb(err);
-          });
+        if(req.body.syurui.match(/(有給|代休)/)){
+          if(record){
+            console.log("選択された申請休暇が有給または代休だったのでカウントダウン処理を行います");
+            countCalc(record, -syurui.day, function(err, re){
+              insert.consumeDay = new Date(re.registDay);
+              cb(err);
+            });
+          }else{
+            cb(new Error('対象になるレコードが存在しません'));
+          }
         }else{
-          cb(new Error('対象になるレコードが存在しません'));
+          cb(null);
         }
       },function(cb){
         insert.save(function(err, re){

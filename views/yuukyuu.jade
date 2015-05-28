@@ -44,8 +44,9 @@ div.row
                 - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
                 for i in nisu
                   option= i
+
             label.col-sm-2.control-label(for='date') 日付
-            div.col-sm-10
+            div.col-sm-8
               input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
             div.col-sm-offset-2.col-sm-10
               button.btn.btn-primary.btn-label-left(type='submit') Submit
@@ -151,6 +152,7 @@ script(type='text/javascript').
           },
           error    : function(XMLHttpRequest, textStatus, errorThrown){
             console.log(XMLHttpRequest, textStatus, errorThrown);
+            LoadAjaxContent('/yuukyuu/');
           }
         });
       }, 100);
