@@ -374,7 +374,7 @@ router.post('/ykreg', function(req, res) {
       if(result){
         var sa = nissuu - result["発生日数"];
         result["発生日数"] = nissuu;
-        result.remains = remains + sa;
+        result.remains = result.remains + sa;
         if( 0 < result.remains ){
           return result.save(function(err, result){
             if(err){return res.status(500).json(err);}
