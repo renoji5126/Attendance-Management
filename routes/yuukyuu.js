@@ -401,4 +401,39 @@ router.post('/ykreg', function(req, res) {
     res.status(403).json(new Error("権限がありません"));
   }
 });
+
+//var dkSchema = new mongoose.Schema({
+//    registDay  : Date,
+//    googleId   : String,
+//    remains    : {type : Number, default: 0 },
+//    "発生日数" : {type : Number, default: 0 }
+//});
+router.post('/dkreg', function(req, res) {
+  //req.body= { syurui: '有給', date: '03/31/2015' }
+  if(req.body.date){
+    var registDay = new Date(req.body.date);
+  }else{ return res.status(400).json(new Error("日付を入力してください"));}
+  var userid = req.session.passport.user.googleId;
+  var nissuu = parseInt(req.body.nissuu);
+  dkmodel.findOne({
+    registDay : registDay,
+    googleId  : userid,
+  }, function(err, result){
+    if(err){ return res.status(500).json(err); }
+    if(result){
+      return res.status(400).json(new Error("既に登録済みです"));
+    }else{
+      var insert = new dkmodel({
+                     registDay : registDay,
+                     googleId  : userid,
+                     remains   : 1,
+                     "発生日数": 1,
+                   });
+      return insert.save(function(err, result){
+        if(err){return res.status(500).json(err);}
+        return res.json({msg: "Success"});
+      });
+    }
+  });
+});
 module.exports = router;

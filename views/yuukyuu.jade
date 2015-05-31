@@ -52,6 +52,23 @@ div.row
               button.btn.btn-primary.btn-label-left(type='submit') Submit
                 span
                   i.fa.fa-clock-o
+  div.col-xs-12.col-sm-6
+    div.box
+      div.box-header
+        div.box-name
+          i.fa.fa-magic
+          span 休日出勤申請フォーム
+      div.box-content
+        div.form-horizontal
+          div.form-group(data-url='/yuukyuu/dkreg', data-method='POST')
+            label.col-sm-2.control-label(for='date') 日付
+            div.col-sm-8
+              input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+            div.col-sm-offset-2.col-sm-10
+              button.btn.btn-primary.btn-label-left(type='submit') Submit
+                span
+                  i.fa.fa-clock-o
+
 div.row
   div.col-xs-12.col-sm-6
     div.box
