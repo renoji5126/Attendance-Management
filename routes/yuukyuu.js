@@ -140,7 +140,6 @@ function dkconsumeDayfind(registDay, userid, cb){
     registDay : { $gte : ago , $lte : registDay },
     remains   : { $gt  : 0 }
   },{ // view
-    _id : 1
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
