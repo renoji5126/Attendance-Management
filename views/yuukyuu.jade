@@ -5,7 +5,7 @@ div.row
         a(href='/') HOME
 
 div.row
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -29,7 +29,7 @@ div.row
               button.btn.btn-primary.btn-label-left(type='submit') Submit
                 span
                   i.fa.fa-clock-o
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -52,7 +52,7 @@ div.row
               button.btn.btn-primary.btn-label-left(type='submit') Submit
                 span
                   i.fa.fa-clock-o
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -70,7 +70,7 @@ div.row
                   i.fa.fa-clock-o
 
 div.row
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -98,7 +98,7 @@ div.row
                     td= data.comment
                   else
                     td
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -118,7 +118,7 @@ div.row
                   td= new Date(data.registDay).toLocaleDateString()
                   td= data['発生日数']
                   td= data.remains
-  div.col-xs-12.col-sm-6
+  div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header
         div.box-name
@@ -165,10 +165,12 @@ script(type='text/javascript').
           async    : true,
           success  : function(msg){
             console.log(msg);
+            alert(msg.msg);
             LoadAjaxContent('/yuukyuu/');
           },
           error    : function(XMLHttpRequest, textStatus, errorThrown){
             console.log(XMLHttpRequest, textStatus, errorThrown);
+            alert(textStatus);
             LoadAjaxContent('/yuukyuu/');
           }
         });
