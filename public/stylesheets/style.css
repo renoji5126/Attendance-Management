@@ -1,6 +1,7 @@
 body {
   color: #525252;
   background: #6AA6D6 url(/images/devoops_pattern_b10.png) 0 0 repeat;
+  -webkit-text-size-adjust: none;
 }
 .body-expanded, .modal-open {
   overflow-y:hidden;
