@@ -40,7 +40,7 @@ var dbsyurui =[{
     ,day:1.0
   }];
 
-function retToJson(message, result){
+var resToJson = function(message, result){
   var ret = {msg: message};
   if(result) ret.result = result;
   return ret;
