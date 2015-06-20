@@ -41,7 +41,9 @@ var dbsyurui =[{
   }];
 
 function retToJson(message, result){
-  return {msg: message, result: result};
+  var ret = {msg: message};
+  if(result) ret.result = result;
+  return ret;
 }
 
 /* GET home page. */
@@ -133,15 +135,17 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
 }
 
 /*
- * 代休の期限は1年？
- *
+ * 休日出勤の期限は２ヶ月前から６ヶ月後まで
+ * 
  */
 function dkconsumeDayfind(registDay, userid, cb){
   var ago = new Date(registDay);
-  ago.setFullYear(ago.getFullYear() - 1);
+  var before = new Date(registDay);
+  ago.setMonth(ago.getMonth() - 6);
+  before.setMonth(before.getMonth() + 2);
   dkmodel.findOne({
     googleId  : userid,
-    registDay : { $gte : ago , $lte : registDay },
+    registDay : { $gte : ago , $lte : before },
     remains   : { $gt  : 0 }
   },{ // view
   },{ // option
@@ -191,12 +195,12 @@ router.post('/', function(req, res) {
     registTypefind(registDay, userid, function(err, result){
       if(err){
         console.log(err); 
-        return res.json(err);
+        return res.json(resToJson(err.message));
       }
       // 種類が同一の場合処理を中断して返す
       if(req.body.syurui === result.syurui){
         console.log("既に登録されています。");
-        return res.status(400).json({msg : "既に登録されています。"});
+        return res.status(400).json(resToJson("既に登録されています。"));
       }else{
         async.waterfall([
           function(cb){
@@ -283,17 +287,17 @@ router.post('/', function(req, res) {
           // 描画処理
           if(err){
             console.log(err);
-            return res.status(500).json(err);
+            return res.status(500).json(resToJson(err.message));
           }else{
             console.log(arg);
-            return res.json({msg : "success"});
+            return res.json(resToJson("success"));
           }
         });
       }
     }, function(err, result){
       if(err){ 
         console.log(err);
-        return res.status(500).json(err);
+        return res.status(500).json(resToJson(err));
       }
       // 登録なしなので登録する有給または第休の場合の処理とそれ以外の処理とわける。
       var insert;
@@ -310,13 +314,11 @@ router.post('/', function(req, res) {
         if(req.body.syurui.match(/(有給)/)){
           console.log("選択された申請休暇が有給だったのでカウントダウン対象のレコードを探索します");
           ykconsumeDayfind(registDay, userid, syurui.day, function(err, re){
-            console.log("aaaaa",re);
             cb(err, re);
           });
         }else if(req.body.syurui.match(/(代休)/)){
           console.log("選択された申請休暇が代休だったのでカウントダウン対象のレコードを探索します");
           dkconsumeDayfind(registDay, userid, function(err, re){
-            console.log("aaaaa",re);
             cb(err, re);
           });
         }else{
@@ -343,15 +345,15 @@ router.post('/', function(req, res) {
       }],function(err,arg){
         if(err){ 
           console.log(err);
-          return res.status(500).json(err);
+          return res.status(500).json(resToJson(err));
         }else{
           console.log(arg);
-          res.json({msg: "success"});
+          res.json(resToJson("success"));
         }
       });
     });
   }else{
-    return res.status(400).json(new Error("登録がない情報です"));
+    return res.status(400).json(resToJson("登録がない情報です"));
   }
 });
 
@@ -366,7 +368,7 @@ router.post('/ykreg', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   if(req.body.date){
   var registDay = new Date(req.body.date);
-  }else{ return res.status(400).json(new Error("日付を入力してください"));}
+  }else{ return res.status(400).json(resToJson("日付を入力してください"));}
   var userid = req.session.passport.user.googleId;
   var nissuu = parseInt(req.body.nissuu);
   if(req.session.passport.user.admin){
@@ -374,18 +376,18 @@ router.post('/ykreg', function(req, res) {
       registDay : registDay,
       googleId  : userid,
     }, function(err, result){
-      if(err){ return res.status(500).json(err); }
+      if(err){ return res.status(500).json(resToJson(err)); }
       if(result){
         var sa = nissuu - result["発生日数"];
         result["発生日数"] = nissuu;
         result.remains = result.remains + sa;
         if( 0 < result.remains ){
           return result.save(function(err, result){
-            if(err){return res.status(500).json(err);}
-            return res.json({msg: "Success"});
+            if(err){return res.status(500).json(resToJson(err));}
+            return res.json(resToJson("Success"));
           });
         }else{
-          return res.status(400).json(new Error("残数が０以下になるような変更はできません"));
+          return res.status(400).json(resToJson("残数が０以下になるような変更はできません"));
         }
       }else{
         var insert = new ykmodel({
@@ -395,13 +397,13 @@ router.post('/ykreg', function(req, res) {
                        "発生日数": nissuu,
                      });
         return insert.save(function(err, result){
-          if(err){return res.status(500).json(err);}
-          return res.json({msg: "Success"});
+          if(err){return res.status(500).json(resToJson(err));}
+          return res.json(resToJson("Success"));
         });
       }
     });
   }else{
-    res.status(403).json({msg : "権限がありません"});
+    res.status(403).json(resToJson( "権限がありません"));
   }
 });
 
@@ -415,16 +417,16 @@ router.post('/dkreg', function(req, res) {
   //req.body= { syurui: '有給', date: '03/31/2015' }
   if(req.body.date){
     var registDay = new Date(req.body.date);
-  }else{ return res.status(400).json(new Error("日付を入力してください"));}
+  }else{ return res.status(400).json(resToJson("日付を入力してください"));}
   var userid = req.session.passport.user.googleId;
   var nissuu = parseInt(req.body.nissuu);
   dkmodel.findOne({
     registDay : registDay,
     googleId  : userid,
   }, function(err, result){
-    if(err){ return res.status(500).json({msg:err.message}); }
+    if(err){ return res.status(500).json(resToJson(err.message)); }
     if(result){
-      return res.status(400).json(new Error("既に登録済みです"));
+      return res.status(400).json(resToJson("既に登録済みです"));
     }else{
       var insert = new dkmodel({
                      registDay : registDay,
@@ -433,8 +435,8 @@ router.post('/dkreg', function(req, res) {
                      "発生日数": 1,
                    });
       return insert.save(function(err, result){
-        if(err){return res.status(500).json(err);}
-        return res.json({msg: "Success"});
+        if(err){return res.status(500).json(resToJson(err));}
+        return res.json(resToJson("Success"));
       });
     }
   });
