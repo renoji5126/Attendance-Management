@@ -32,31 +32,32 @@ div.row
               button.btn.btn-primary.btn-label-left(type='submit') Submit
                 span
                   i.fa.fa-clock-o
-  div.col-xs-12.col-sm-12.col-md-6
-    div.box
-      div.box-header
-        div.box-name
-          i.fa.fa-magic
-          span 有給休暇付加フォーム
-      div.box-content
-        div.form-horizontal(data-url='/yuukyuu/ykreg', data-method='POST')
-          div.form-group
-            label.col-sm-2.control-label(for='select') 付与日数
-            div.col-sm-10
-              select(name='nissuu').selectmenu
-                - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
-                for i in nisu
-                  option= i
+  if(admin)
+    div.col-xs-12.col-sm-12.col-md-6
+      div.box
+        div.box-header
+          div.box-name
+            i.fa.fa-magic
+            span 有給休暇付加フォーム
+        div.box-content
+          div.form-horizontal(data-url='/yuukyuu/ykreg', data-method='POST')
+            div.form-group
+              label.col-sm-2.control-label(for='select') 付与日数
+              div.col-sm-10
+                select(name='nissuu').selectmenu
+                  - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
+                  for i in nisu
+                    option= i
 
-          div.form-group
-            label.col-sm-2.control-label(for='date') 日付
-            div.col-sm-8
-              input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
-          div.form-group
-            div.col-sm-offset-2.col-sm-10
-              button.btn.btn-primary.btn-label-left(type='submit') Submit
-                span
-                  i.fa.fa-clock-o
+            div.form-group
+              label.col-sm-2.control-label(for='date') 日付
+              div.col-sm-8
+                input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+            div.form-group
+              div.col-sm-offset-2.col-sm-10
+                button.btn.btn-primary.btn-label-left(type='submit') Submit
+                  span
+                    i.fa.fa-clock-o
   div.col-xs-12.col-sm-12.col-md-6
     div.box
       div.box-header

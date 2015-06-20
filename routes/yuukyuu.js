@@ -40,9 +40,13 @@ var dbsyurui =[{
     ,day:1.0
   }];
 
+function retToJson(message, result){
+  return {msg: message, result: result};
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
-  var options = { title: '休暇申請',syurui: dbsyurui };
+  var options = { title: '休暇申請',syurui: dbsyurui , admin: req.session.passport.user.admin};
   var query = {  
     archive   : false,
     googleId  : req.session.passport.user.googleId
@@ -397,7 +401,7 @@ router.post('/ykreg', function(req, res) {
       }
     });
   }else{
-    res.status(403).json(new Error("権限がありません"));
+    res.status(403).json({msg : "権限がありません"});
   }
 });
 
@@ -418,7 +422,7 @@ router.post('/dkreg', function(req, res) {
     registDay : registDay,
     googleId  : userid,
   }, function(err, result){
-    if(err){ return res.status(500).json(err); }
+    if(err){ return res.status(500).json({msg:err.message}); }
     if(result){
       return res.status(400).json(new Error("既に登録済みです"));
     }else{
