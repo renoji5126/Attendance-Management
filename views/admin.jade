@@ -1,0 +1,99 @@
+div.row
+  div#breadcrumb.col-md-12
+    ol.breadcrumb
+      li
+        a(href='/') HOME
+
+//if(admin)
+  div.row
+    div.col-xs-12.col-sm-12.col-md-6
+      div.box
+        div.box-header
+          div.box-name
+            i.fa.fa-magic
+            span 有給休暇付加フォーム
+        div.box-content
+          div.form-horizontal(data-url='/yuukyuu/ykreg', data-method='POST')
+            div.form-group
+              label.col-sm-2.control-label(for='date') 対象
+              div.col-sm-8
+                select(name='user').selectmenu
+                  for u in users
+                    option(value=u.googleId)= u.name
+            div.form-group
+              label.col-sm-2.control-label(for='select') 付与日数
+              div.col-sm-10
+                select(name='nissuu').selectmenu
+                  - var nisu = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ,20];
+                  for i in nisu
+                    option= i
+
+            div.form-group
+              label.col-sm-2.control-label(for='date') 日付
+              div.col-sm-8
+                input.datepicker.form-control(type='text',name='date',placeholder='発生日を入力')
+            div.form-group
+              div.col-sm-offset-2.col-sm-10
+                button.btn.btn-primary.btn-label-left(type='submit') Submit
+                  span
+                    i.fa.fa-clock-o
+  div.row
+    //div.col-xs-12.col-sm-12.col-md-6
+    //  div.box
+    //    div.box-header
+    //      div.box-name
+    //        i.fa.fa-magic
+    //        span 申請可能な有給休暇
+    //    div.box-content
+    //      table.table.table-striped
+    //        thead
+    //          tr
+    //            th 登録日
+    //            th 発生有給数
+    //            th 残有給数
+    //        tbody
+    //          if(db['有給休暇'].length)
+    //            for data in db['有給休暇']
+    //              tr
+    //                td= new Date(data.registDay).toLocaleDateString()
+    //                td= data['発生日数']
+    //                td= data.remains
+
+  script(type='text/javascript').
+    $(document).ready(function(){
+      LoadTimePickerScript(DatePickers);
+      $('.form-group button').click(function(e){
+        var $val = $(this).parent().parent().parent();
+        var $select= $val.children('div.form-group').children('div').children('select.selectmenu');
+        var $input = $val.children('div.form-group').children('div').children('input');
+        var url = $val.attr('data-url');
+        var method = $val.attr('data-method');
+        var data_object = new Object();
+        $select.each(function(s_i, s_val){
+          data_object[$(s_val).attr('name')] = $(s_val).val();
+        });
+        $input.each(function(i_i, i_val){
+          data_object[$(i_val).attr('name')] = $(i_val).val();
+        });
+        setTimeout(function(){
+          console.log(url,method,data_object);
+          $.ajax({
+            type     : method,
+            url      : url,
+            data     : data_object,
+            dataType : "json",
+            async    : true,
+            success  : function(msg){
+              console.log(msg);
+              alert(msg.msg);
+              LoadAjaxContent('/yuukyuu/admin');
+            },
+            error    : function(XMLHttpRequest, textStatus, errorThrown){
+              console.log(XMLHttpRequest, textStatus, errorThrown);
+              alert(textStatus);
+              LoadAjaxContent('/yuukyuu/admin');
+            }
+          });
+        }, 100);
+      });
+    });

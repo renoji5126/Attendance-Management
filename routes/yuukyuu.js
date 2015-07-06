@@ -55,7 +55,7 @@ router.get('/admin', function(req, res) {
       userinfo.find(query,{ googleId: 1, name :1} , function(err, docs){
         //res.json(docs);
         options.users = docs;
-        res.render('admin',options);
+        res.render('admin', options);
       });
   //}else{
   //  res.redirect('/')
