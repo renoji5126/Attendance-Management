@@ -47,7 +47,7 @@ var resToJson = function(message, result){
 }
 
 router.get('/admin', function(req, res) {
-  var domain = req.session.passport.user.email.split("@").[1];
+  var domain = req.session.passport.user.email.split("@")[1];
   var query = { email : { $regex: "@" + domain , $options: "i"} } ;
   userinfo.find(query, function(err, docs){
 res.json(docs);
