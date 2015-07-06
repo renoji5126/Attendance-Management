@@ -47,19 +47,19 @@ var resToJson = function(message, result){
 }
 
 router.get('/admin', function(req, res) {
-  //if(req.session.passport.user.admin){
-      var options = { title: 'admin' , admin: req.session.passport.user.admin};
-      var domain = req.session.passport.user.email.split("@")[1];
-      var query = { email : { $regex: "@" + domain , $options: "i"} } ;
-      var view = {  };
-      userinfo.find(query,{ googleId: 1, name :1} , function(err, docs){
-        //res.json(docs);
-        options.users = docs;
-        res.render('admin', options);
-      });
-  //}else{
-  //  res.redirect('/')
-  //}
+  if(req.session.passport.user.admin){
+    var options = { title: 'admin' , admin: req.session.passport.user.admin};
+    var domain = req.session.passport.user.email.split("@")[1];
+    var query = { email : { $regex: "@" + domain , $options: "i"} } ;
+    var view = { googleId: 1, name :1};
+    userinfo.find(query, view , function(err, docs){
+      //res.json(docs);
+      options.users = docs;
+      res.render('admin', options);
+    });
+  }else{
+    res.redirect('/')
+  }
 });
 /* GET home page. */
 router.get('/', function(req, res) {

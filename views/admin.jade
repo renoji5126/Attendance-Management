@@ -4,7 +4,7 @@ div.row
       li
         a(href='/') HOME
 
-//if(admin)
+if(admin)
   div.row
     div.col-xs-12.col-sm-12.col-md-6
       div.box
@@ -37,27 +37,27 @@ div.row
                 button.btn.btn-primary.btn-label-left(type='submit') Submit
                   span
                     i.fa.fa-clock-o
-  div.row
-    //div.col-xs-12.col-sm-12.col-md-6
-    //  div.box
-    //    div.box-header
-    //      div.box-name
-    //        i.fa.fa-magic
-    //        span 申請可能な有給休暇
-    //    div.box-content
-    //      table.table.table-striped
-    //        thead
-    //          tr
-    //            th 登録日
-    //            th 発生有給数
-    //            th 残有給数
-    //        tbody
-    //          if(db['有給休暇'].length)
-    //            for data in db['有給休暇']
-    //              tr
-    //                td= new Date(data.registDay).toLocaleDateString()
-    //                td= data['発生日数']
-    //                td= data.remains
+  //div.row
+    div.col-xs-12.col-sm-12.col-md-6
+      div.box
+        div.box-header
+          div.box-name
+            i.fa.fa-magic
+            span 申請可能な有給休暇
+        div.box-content
+          table.table.table-striped
+            thead
+              tr
+                th 登録日
+                th 発生有給数
+                th 残有給数
+            tbody
+              if(db['有給休暇'].length)
+                for data in db['有給休暇']
+                  tr
+                    td= new Date(data.registDay).toLocaleDateString()
+                    td= data['発生日数']
+                    td= data.remains
 
   script(type='text/javascript').
     $(document).ready(function(){
