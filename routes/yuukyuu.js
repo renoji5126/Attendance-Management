@@ -46,6 +46,14 @@ var resToJson = function(message, result){
   return ret;
 }
 
+router.get('/admin', function(req, res) {
+  var domain = req.session.passport.user.email.split("@").[1];
+  var query = { email : { $regex: "@" + domain , $options: "i"} } ;
+  userinfo.find(query, function(err, docs){
+res.json(docs);
+    //res.render('admin',res_object);
+  });
+});
 /* GET home page. */
 router.get('/', function(req, res) {
   var options = { title: '休暇申請',syurui: dbsyurui , admin: req.session.passport.user.admin};
