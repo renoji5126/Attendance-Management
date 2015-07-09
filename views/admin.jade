@@ -53,7 +53,7 @@ if(admin)
                 th 残有給数
                 th archive
             tbody
-              if(db.lengath)
+              if(db.length)
                 for data in db
                   tr
                     td= new Date(data.registDay).toLocaleDateString()
