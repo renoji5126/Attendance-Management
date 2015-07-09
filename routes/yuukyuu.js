@@ -59,6 +59,7 @@ router.get('/admin', function(req, res) {
       docs.forEach(function(v,i){ gid_list.push( v.googleId ); });
       ykmodel.find({ googleId :{ $in : gid_list }},function(ykerr, ykdocs){
         options.db = ykdocs;
+        console.log(options);
         res.render('admin', options);
       });
     });
@@ -308,7 +309,7 @@ router.post('/', function(req, res) {
           // 描画処理
           if(err){
             console.log(err);
-            return res.status(500).json(resToJson(err.message));
+            return res.json(resToJson(err.message));
           }else{
             console.log(arg);
             return res.json(resToJson("success"));
@@ -318,7 +319,7 @@ router.post('/', function(req, res) {
     }, function(err, result){
       if(err){ 
         console.log(err);
-        return res.status(500).json(resToJson(err));
+        return res.json(resToJson(err));
       }
       // 登録なしなので登録する有給または第休の場合の処理とそれ以外の処理とわける。
       var insert;
@@ -365,8 +366,7 @@ router.post('/', function(req, res) {
         });
       }],function(err,arg){
         if(err){ 
-          console.log(err);
-          return res.status(500).json(resToJson(err));
+          return res.json(resToJson(err));
         }else{
           console.log(arg);
           res.json(resToJson("success"));
@@ -374,7 +374,7 @@ router.post('/', function(req, res) {
       });
     });
   }else{
-    return res.status(400).json(resToJson("登録がない情報です"));
+    return res.json(resToJson("登録がない情報です"));
   }
 });
 
