@@ -48,6 +48,7 @@ if(admin)
           table.table.table-striped
             thead
               tr
+                th 名前
                 th 登録日
                 th 発生有給数
                 th 残有給数
@@ -56,6 +57,7 @@ if(admin)
               if(db.length)
                 for data in db
                   tr
+                    td= users.filter(function(user){ if(user.googleId == data.googleId) return true;});
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
                     td= data.remains
