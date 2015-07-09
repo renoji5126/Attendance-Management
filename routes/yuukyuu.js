@@ -58,7 +58,7 @@ router.get('/admin', function(req, res) {
       var gid_list = [];
       docs.forEach(function(v,i){ gid_list.push( v.googleId ); });
       ykmodel.find({ googleId :{ $in : gid_list }},function(ykerr, ykdocs){
-        options.data = ykdocs;
+        options.db = ykdocs;
         res.render('admin', options);
       });
     });

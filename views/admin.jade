@@ -43,7 +43,7 @@ if(admin)
         div.box-header
           div.box-name
             i.fa.fa-magic
-            span 申請可能な有給休暇
+            span 付加済み有給休暇
         div.box-content
           table.table.table-striped
             thead
@@ -53,8 +53,8 @@ if(admin)
                 th 残有給数
                 th archive
             tbody
-              if(db['有給休暇'].length)
-                for data in db['有給休暇']
+              if(db.lengath)
+                for data in db
                   tr
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
