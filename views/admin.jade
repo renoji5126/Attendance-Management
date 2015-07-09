@@ -57,7 +57,7 @@ if(admin)
               if(db.length)
                 for data in db
                   tr
-                    td= users.filter(function(user){ if(user.googleId == data.googleId) return true;})[0]
+                    td= users.filter(function(user){ if(user.googleId == data.googleId) return true;})[0].name
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
                     td= data.remains
