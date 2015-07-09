@@ -77,10 +77,14 @@ html(lang='ja')
               a.active.ajax-link(href='/yuukyuu')
                 i.fa.fa-dashboard
                 span.hidden-xs Dashboard
-            li
-              a.active.ajax-link(href='/yuukyuu/admin')
-                i.fa.fa-dashboard
-                span.hidden-xs Admin
+            if(admin)
+              li.dropdown
+                a.dropdown-toggle(href="#")
+                  i.fa.fa-table
+                  span.hidden-xs Admin Menu
+                ul.dropdown-menu
+                  li
+                    a.ajax-link(href='/yuukyuu/admin') 有給付加
         div#content.col-xs-12.col-sm-10
           div.preloader
             img.devoops-getdata(src='images/devoops_getdata.gif',alt='preloader')
