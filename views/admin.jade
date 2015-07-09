@@ -37,8 +37,8 @@ if(admin)
                 button.btn.btn-primary.btn-label-left(type='submit') Submit
                   span
                     i.fa.fa-clock-o
-  //div.row
-    div.col-xs-12.col-sm-12.col-md-6
+  div.row
+    div.col-xs-12.col-sm-12.col-md-12
       div.box
         div.box-header
           div.box-name
@@ -51,6 +51,7 @@ if(admin)
                 th 登録日
                 th 発生有給数
                 th 残有給数
+                th archive
             tbody
               if(db['有給休暇'].length)
                 for data in db['有給休暇']
@@ -58,6 +59,7 @@ if(admin)
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
                     td= data.remains
+                    td= data.archive
 
   script(type='text/javascript').
     $(document).ready(function(){
