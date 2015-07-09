@@ -61,6 +61,7 @@ router.get('/admin', function(req, res) {
     res.redirect('/')
   }
 });
+
 /* GET home page. */
 router.get('/', function(req, res) {
   var options = { title: '休暇申請',syurui: dbsyurui , admin: req.session.passport.user.admin};
@@ -384,43 +385,57 @@ router.post('/ykreg', function(req, res) {
   if(req.body.date){
   var registDay = new Date(req.body.date);
   }else{ return res.status(400).json(resToJson("日付を入力してください"));}
-  var userid = req.session.passport.user.googleId;
+  var userid;
+  if( req.session.passport.user.admin && req.body.user ){
+    userid = req.body.user;
+  }else{
+    userid = req.session.passport.user.googleId;
+  }
   var nissuu = parseInt(req.body.nissuu);
   if(req.session.passport.user.admin){
-    ykmodel.findOne({
-      registDay : registDay,
-      googleId  : userid,
-    }, function(err, result){
-      if(err){ return res.status(500).json(resToJson(err)); }
-      if(result){
-        var sa = nissuu - result["発生日数"];
-        result["発生日数"] = nissuu;
-        result.remains = result.remains + sa;
-        if( 0 < result.remains ){
-          return result.save(function(err, result){
-            if(err){return res.status(500).json(resToJson(err));}
-            return res.json(resToJson("Success"));
-          });
-        }else{
-          return res.status(400).json(resToJson("残数が０以下になるような変更はできません"));
-        }
+    ykinsert(registDay, userid, nissuu, function(err, msg){
+      if(err){
+        res.json(resToJson(err.message));
       }else{
-        var insert = new ykmodel({
-                       registDay : registDay,
-                       googleId  : userid,
-                       remains   : nissuu,
-                       "発生日数": nissuu,
-                     });
-        return insert.save(function(err, result){
-          if(err){return res.status(500).json(resToJson(err));}
-          return res.json(resToJson("Success"));
-        });
+        res.json(resToJson(msg));
       }
     });
   }else{
     res.status(403).json(resToJson( "権限がありません"));
   }
 });
+
+var ykinsert = function(registDay, userid, nissuu, cb){
+  ykmodel.findOne({
+    registDay : registDay,
+    googleId  : userid,
+  }, function(err, result){
+    if(err){ cb(err) }
+    if(result){
+      var sa = nissuu - result["発生日数"];
+      result["発生日数"] = nissuu;
+      result.remains = result.remains + sa;
+      if( 0 < result.remains ){
+        result.save(function(err, result){
+          cb(err, "Success");
+        });
+      }else{
+        cb(new Error("残数が０以下になるような変更はできません"));
+      }
+    }else{
+      var insert = new ykmodel({
+                     registDay : registDay,
+                     googleId  : userid,
+                     remains   : nissuu,
+                     "発生日数": nissuu,
+                   });
+      return insert.save(function(err, result){
+        if(err){ cb(err); }
+        cb(null, "Success");
+      });
+    }
+  });
+}
 
 //var dkSchema = new mongoose.Schema({
 //    registDay  : Date,
