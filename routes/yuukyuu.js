@@ -476,4 +476,15 @@ router.post('/dkreg', function(req, res) {
     }
   });
 });
+
+
+router.delete('/', function(req, res) {
+  var userid = req.body.userid;
+  if(req.session.passport.user.admin || req.session.passport.user.googleId == req.body.userid){
+    userid = req.body.id;
+  }else{
+    res.json(resToJson("権限がない"));
+  }
+});
+
 module.exports = router;
