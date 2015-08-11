@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
   }else{
     var domain = user.email.split("@")[1];
     var query = { email : { $regex: "@" + domain , $options: "i"} } ;
-    userInfo.find(query, function(err, docs){
+    userinfo.find(query, function(err, docs){
       res.render('layout', { title: '勤怠Web管理' , user: user, users: docs});
     });
   }
