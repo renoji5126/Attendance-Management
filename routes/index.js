@@ -1,8 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
-var userModel = module.parent.userInfoModel;
-
+var userinfo = module.parent.exports.userInfoModel;
 /* GET home page. */
 router.get('/', function(req, res) {
   var user = req.session.passport.user;
@@ -10,8 +9,8 @@ router.get('/', function(req, res) {
     res.render('layout', { title: '勤怠Web管理' , user: user});
   }else{
     var domain = user.email.split("@")[1];
-    var sql = { email : { $regex: "@" + domain , $options: "i"} } ;
-    userModel.find(sql, function(err, docs){
+    var query = { email : { $regex: "@" + domain , $options: "i"} } ;
+    userInfo.find(query, function(err, docs){
       res.render('layout', { title: '勤怠Web管理' , user: user, users: docs});
     });
   }
