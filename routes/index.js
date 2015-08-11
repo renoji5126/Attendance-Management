@@ -5,7 +5,16 @@ var userModel = module.parent.userInfoModel;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('layout', { title: '勤怠Web管理' , user: req.session.passport.user });
+  var user = req.session.passport.user;
+  if(!user.admin){
+    res.render('layout', { title: '勤怠Web管理' , user: user});
+  }else{
+    var domain = user.email.split("@")[1];
+    var sql = { email : { $regex: "@" + domain , $options: "i"} } ;
+    userModel.find(sql, function(err, docs){
+      res.render('layout', { title: '勤怠Web管理' , user: user, users: docs});
+    });
+  }
 });
 
 
