@@ -52,6 +52,29 @@ app.kintaiSchema = new mongoose.Schema({
   },
 });
 app.mongoose = mongoose;
+
+var schema = new mongoose.Schema({
+    registDay  : Date,
+    googleId   : String,
+    //registType : {type : String, default: "申請休暇" },
+    consumeDay : Date,
+    archive    : {type : Boolean, default: false },
+    syurui     : {type : String, default: null },
+    comment    : {type : String, default: "" }
+});
+var ykSchema = new mongoose.Schema({
+    registDay  : Date,
+    googleId   : String,
+    //registType : {type : String, default: "有給休暇" },
+    remains    : {type : Number,  default: 0 },
+    archive    : {type : Boolean, default: false },
+    "発生日数" : {type : Number,  default: 0 }
+});
+mongoose.model( "syutokus" , schema );
+mongoose.model( "yuukyuus" , ykSchema );
+mongoose.model( "syukkins" , ykSchema );
+
+
 app.config = conf;
 var googleConfig = {};
 if(process.env.GOOGLE_AUTH_CLIENTID)
