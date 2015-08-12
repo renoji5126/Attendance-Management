@@ -114,7 +114,7 @@ if(admin)
         var url = $val.attr('data-url');
         var method = $val.attr('data-method');
         var data_object = new Object();
-        data_object.user = #{user.googleId}
+        data_object.user = #{db.user.googleId}
         $select.each(function(s_i, s_val){
           data_object[$(s_val).attr('name')] = $(s_val).val();
         });
