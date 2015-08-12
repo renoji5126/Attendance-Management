@@ -83,11 +83,11 @@ html(lang='ja')
                   i.fa.fa-table
                   span.hidden-xs Admin Menu
                 ul.dropdown-menu
-                  li
+                  //li
                     a.ajax-link(href='/yuukyuu/admin') 有給付加
                   for i in users
                     li
-                      a.ajax-link(href='/yuukyuu/#{i.googleId}')= i.name
+                      a.ajax-link(href='/users/#{i.googleId}')= i.name
         div#content.col-xs-12.col-sm-10
           div.preloader
             img.devoops-getdata(src='images/devoops_getdata.gif',alt='preloader')
