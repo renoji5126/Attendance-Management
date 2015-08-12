@@ -26,7 +26,7 @@ router.get('/:id', function(req, res) {
     //},function(plcb){
     }
   },function(err, results){
-    console.log(err.message);
+    if(err) console.log(err.message);
     optisons.db = results;
     res.render('user', optisons);
   });
