@@ -13,16 +13,17 @@ var dkmodel = mongoose.models.syukkins;
 router.get('/:id', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
+  var op = {sort : {registDay : -1}};
   var optisions = {admin : req.session.passport.user.admin}
   async.parallel({
     user : function(plcb){
       userinfo.find(query, function(err, docs){ plcb(err, docs[0]); });
     }, syutokus: function(plcb){
-      model.find(query, function(err, docs){ plcb(err, docs); });
+      model.find(query, {}, op, function(err, docs){ plcb(err, docs); });
     }, yuukyuus: function(plcb){
-      ykmodel.find(query, function(err, docs){ plcb(err, docs); });
+      ykmodel.find(query, {}, op, function(err, docs){ plcb(err, docs); });
     }, syukkins: function(plcb){
-      dkmodel.find(query, function(err, docs){ plcb(err, docs); });
+      dkmodel.find(query, {}, op, function(err, docs){ plcb(err, docs); });
     //},function(plcb){
     }
   },function(err, results){

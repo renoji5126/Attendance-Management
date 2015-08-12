@@ -5,7 +5,7 @@ div.row
         a(href='/') HOME
 
 if(admin)
-  mixin dash(title, )
+  mixin dash(title)
     div.col-xs-12.col-sm-6.col-md-4
       h4.page-header.text-right
         i.fa.fa-linux= title
@@ -19,6 +19,7 @@ if(admin)
             i.fa.fa-linux
             | CentOS
   div.row
+    dash('test')
     div.col-xs-12.col-sm-12.col-md-6
       div.box
         div.box-header
@@ -80,7 +81,6 @@ if(admin)
           table.table.table-striped
             thead
               tr
-                th 名前
                 th 休暇日
                 th 消化有給日
                 th 申請休暇種別
@@ -90,7 +90,6 @@ if(admin)
               if(db.syutokus.length)
                 for data in db.syutokus
                   tr
-                    td= db.user.name
                     td= new Date(data.registDay).toLocaleDateString()
                     if(data.consumeDay)
                       td= new Date(data.consumeDay).toLocaleDateString()
@@ -102,7 +101,26 @@ if(admin)
                     else
                       td
                     td= data.archive
-
+  div.col-xs-12.col-sm-12.col-md-6
+    div.box
+      div.box-header
+        div.box-name
+          i.fa.fa-magic
+          span 休日出勤
+      div.box-content
+        table.table.table-striped
+          thead
+            tr
+              th 登録日
+              th 勤務日数
+              th 残代休
+          tbody
+            if(db.syukkins.length)
+              for data in db.syukkins
+                tr
+                  td= new Date(data.registDay).toLocaleDateString()
+                  td= data['発生日数']
+                  td= data.remains
 
   script(type='text/javascript').
     $(document).ready(function(){
@@ -114,7 +132,7 @@ if(admin)
         var url = $val.attr('data-url');
         var method = $val.attr('data-method');
         var data_object = new Object();
-        data_object.user = #{db.user.googleId}
+        data_object.user = "#{db.user.googleId}";
         $select.each(function(s_i, s_val){
           data_object[$(s_val).attr('name')] = $(s_val).val();
         });
@@ -132,12 +150,12 @@ if(admin)
             success  : function(msg){
               console.log(msg);
               alert(msg.msg);
-              LoadAjaxContent('/yuukyuu/admin');
+              LoadAjaxContent('/users/#{db.user.googleId}');
             },
             error    : function(XMLHttpRequest, textStatus, errorThrown){
               console.log(XMLHttpRequest, textStatus, errorThrown);
               alert(textStatus);
-              LoadAjaxContent('/yuukyuu/admin');
+              LoadAjaxContent('/users/#{db.user.googleId}');
             }
           });
         }, 100);
