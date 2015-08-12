@@ -27,7 +27,7 @@ router.get('/:id', function(req, res) {
     }
   },function(err, results){
     if(err) console.log(err.message);
-    optisons.db = results;
+    optisions.db = results;
     res.render('user', optisons);
   });
 });
