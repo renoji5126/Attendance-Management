@@ -45,7 +45,7 @@ if(admin)
                   span
                     i.fa.fa-clock-o
   div.row
-    div.col-xs-12.col-sm-12.col-md-12
+    div.col-xs-12.col-sm-12.col-md-6
       div.box
         div.box-header
           div.box-name
@@ -61,14 +61,45 @@ if(admin)
                 th 残有給数
                 th archive
             tbody
-              if(db.syutokus.length)
-                for data in db.syutokus
+              if(db.yuukyuus.length)
+                for data in db.yuukyuus
                   tr
                     td= db.user.name
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
                     td= data.remains
                     td= data.archive
+    div.col-xs-12.col-sm-12.col-md-6
+      div.box
+        div.box-header
+          div.box-name
+            i.fa.fa-magic
+            span 申請済み休暇
+        div.box-content
+          table.table.table-striped
+            thead
+              tr
+                th 名前
+                th 休暇日
+                th 消化有給日
+                th 申請休暇種別
+                th 備考欄
+                th archive
+            tbody
+              if(db.syutokus.length)
+                for data in db.syutokus
+                  tr
+                    td= db.user.name
+                    td= new Date(data.registDay).toLocaleDateString()
+                    if(data.consumeDay)
+                      td= new Date(data.consumeDay).toLocaleDateString()
+                    else
+                      td
+                    td= data.syurui
+                    if(data.comment)
+                      td= data.comment
+                    td= data.archive
+
 
   script(type='text/javascript').
     $(document).ready(function(){
@@ -80,6 +111,7 @@ if(admin)
         var url = $val.attr('data-url');
         var method = $val.attr('data-method');
         var data_object = new Object();
+        data_object.user = #{user.googleId}
         $select.each(function(s_i, s_val){
           data_object[$(s_val).attr('name')] = $(s_val).val();
         });
