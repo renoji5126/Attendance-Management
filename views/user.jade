@@ -64,7 +64,7 @@ if(admin)
               if(db.syutokus.length)
                 for data in db.syutokus
                   tr
-                    td= db.users.name
+                    td= db.user.name
                     td= new Date(data.registDay).toLocaleDateString()
                     td= data['発生日数']
                     td= data.remains
