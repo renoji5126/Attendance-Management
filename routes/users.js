@@ -42,7 +42,7 @@ router.get('/:id', function(req, res) {
       dkmodel.find(query, function(err, docs){ plcb(err, docs); });
     //},function(plcb){
     }
-  ],function(err, results){
+  },function(err, results){
     optisons.db = results;
     res.render('user', optisons);
   });
