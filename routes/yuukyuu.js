@@ -67,14 +67,14 @@ router.get('/', function(req, res) {
       async.parallel([
         function(plcb){
           ykmodel.find(query,{},{
-                         sort  : {registDay: 1},
+                         sort  : {registDay: -1},
                        },function(err, result){
             db['有給休暇'] = result;
             plcb(err, result);
           });
         },function(plcb){
           dkmodel.find(query,{},{
-                         sort  : {registDay: 1},
+                         sort  : {registDay: -1},
                        },function(err, result){
             db['休日出勤'] = result;
             plcb(err, result);
