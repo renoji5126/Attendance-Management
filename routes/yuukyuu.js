@@ -19,6 +19,9 @@ var dbsyurui =[{
     name:'代休'
     ,day:1.0
   },{
+    name:'欠勤'
+    ,day:1.0
+  },{
     name:'忌引'
     ,day:1.0
   }];
