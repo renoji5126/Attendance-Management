@@ -302,14 +302,14 @@ router.post('/', function(req, res) {
             return res.json(resToJson(err.message));
           }else{
             console.log(arg);
-            return res.json(resToJson("success"));
+            return res.json(resToJson("登録完了！"));
           }
         });
       }
     }, function(err, result){
       if(err){ 
         console.log(err);
-        return res.json(resToJson(err));
+        return res.json(resToJson(err.message));
       }
       // 登録なしなので登録する有給または第休の場合の処理とそれ以外の処理とわける。
       var insert;
@@ -356,10 +356,11 @@ router.post('/', function(req, res) {
         });
       }],function(err,arg){
         if(err){ 
-          return res.json(resToJson(err));
+          console.log(err);
+          return res.json(resToJson(err.message));
         }else{
           console.log(arg);
-          res.json(resToJson("success"));
+          res.json(resToJson("登録完了！"));
         }
       });
     });
@@ -461,7 +462,7 @@ router.post('/dkreg', function(req, res) {
                    });
       return insert.save(function(err, result){
         if(err){return res.status(500).json(resToJson(err));}
-        return res.json(resToJson("Success"));
+        return res.json(resToJson("登録完了！"));
       });
     }
   });
