@@ -130,14 +130,15 @@ function registTypefind(registDay, userid, resultCb , noResultCb){
 function ykconsumeDayfind(registDay, userid, remain, cb){
   var ago = new Date(registDay);
   ago.setFullYear(ago.getFullYear() - 2);
-  ykmodel.findOne({
+  var query ={
     googleId  : userid,
     registDay : { $gte : ago , $lte : registDay },
     remains   : { $gte  : remain }
-  },{ // view
-  },{ // option
-    sort:{registDay: 1}
-  },function(err, result){
+  };
+  var view = {};
+  var option ={ sort:{registDay: 1} };
+  console.log(registDay,userid,query,view,option);
+  ykmodel.findOne(query, view, option, function(err, result){
     console.log(err,result);
     cb(err, result);
   });
@@ -152,14 +153,15 @@ function dkconsumeDayfind(registDay, userid, cb){
   var before = new Date(registDay);
   ago.setMonth(ago.getMonth() - 6);
   before.setMonth(before.getMonth() + 2);
-  dkmodel.findOne({
+  var query = {
     googleId  : userid,
     registDay : { $gte : ago , $lte : before },
     remains   : { $gt  : 0 }
-  },{ // view
-  },{ // option
-    sort:{registDay: 1}
-  },function(err, result){
+  };
+  var view = {};
+  var option = { sort:{registDay: 1} };
+  console.log(registDay,userid,query,view,option);
+  dkmodel.findOne(query, view, option, function(err, result){
     console.log(err,result);
     cb(err, result);
   });
