@@ -138,6 +138,7 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
+    console.log(err,result);
     cb(err, result);
   });
 }
@@ -159,6 +160,7 @@ function dkconsumeDayfind(registDay, userid, cb){
   },{ // option
     sort:{registDay: 1}
   },function(err, result){
+    console.log(err,result);
     cb(err, result);
   });
 }
