@@ -9,7 +9,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
+var mongoose = require('mongodb');
 var passport = require('passport');
 var app = module.exports = express();
 
