@@ -22,9 +22,7 @@ if(process.env.MONGOLAB_URI){
 }
 //console.log(url);
 mongoose.connect(url, function(err){
-  console.log("test");
   if (err) throw err;
-  console.log("test1");
 });
 
 var userInfo = new mongoose.Schema({
