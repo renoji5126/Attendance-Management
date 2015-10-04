@@ -23,6 +23,7 @@ if(process.env.MONGOLAB_URI){
 //console.log(url);
 mongoose.connect(url, function(err){
   console.log("mongo try connection url :",url);
+  console.log("mongoose version :",mongoose.version);
   if (err) throw err;
 });
 
