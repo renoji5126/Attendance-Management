@@ -22,11 +22,12 @@ if(process.env.MONGOLAB_URI){
 }
 //console.log(url);
 mongoose.connect(url, function(err){
-  console.log("mongo try connection url :",url);
-  console.log("mongoose version :",mongoose.version);
+  //console.log("mongo try connection url :",url);
+  //console.log("mongoose version :",mongoose.version);
   if (err) throw err;
 });
-
+console.log(mongoose.connection.db);
+console.log(mongoose.connections.db);
 var userInfo = new mongoose.Schema({
   googleId : String,
 //社員ID的なのひとつ欲しい
@@ -108,7 +109,7 @@ app.use(cookieParser());
 app.use(session({
   secret: 'uchida',
   store: new MongoStore({
-    db: mongoose.connection.db,
+    db: mongoose.connection,
     clear_interval: 60 * 60
   }),
   cookie: {
