@@ -107,7 +107,7 @@ app.use(cookieParser());
 app.use(session({
   secret: 'uchida',
   store: new MongoStore({
-    db: mongoose.createConnection(url),
+    db: mongoose.connection,
     clear_interval: 60 * 60
   }),
   cookie: {
