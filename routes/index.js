@@ -18,8 +18,6 @@ router.get('/', function(req, res) {
 
 
 router.get('/login', function(req, res) {
-  console.log("login called");
-  userinfo.find({},function(err,docs){ console.log(docs);});
   if(req.session.passport.user) res.redirect('/');
   res.render('login', { title: 'login' });
 });
