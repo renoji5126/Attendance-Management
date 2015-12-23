@@ -33,4 +33,26 @@ router.get('/:id', function(req, res) {
   });
 });
 
+//export用uri
+router.get('/:id/json', function(req, res) {
+  var id = req.params.id;
+  var query = { googleId : id };
+  var op = {sort : {registDay : -1}};
+  async.parallel({
+    user : function(plcb){
+      userinfo.find(query, function(err, docs){ plcb(err, docs[0]); });
+    }, syutokus: function(plcb){
+      model.find(query, {}, op, function(err, docs){ plcb(err, docs); });
+    }, yuukyuus: function(plcb){
+      ykmodel.find(query, {}, op, function(err, docs){ plcb(err, docs); });
+    }, syukkins: function(plcb){
+      dkmodel.find(query, {}, op, function(err, docs){ plcb(err, docs); });
+    //},function(plcb){
+    }
+  },function(err, results){
+    if(err) console.log(err.message);
+    res.render(results);
+  });
+});
+
 module.exports = router;
