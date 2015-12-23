@@ -51,7 +51,7 @@ router.get('/:id/json', function(req, res) {
     }
   },function(err, results){
     if(err) console.log(err.message);
-    res.render(results);
+    res.json(results);
   });
 });
 
