@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var async = require('async');
+var json2csv = require('json2csv');
 var userinfo = module.parent.exports.userInfoModel;
 var router = express.Router();
 var mongoose = module.parent.exports.mongoose;
@@ -54,5 +55,72 @@ router.get('/:id/json', function(req, res) {
     res.json(results);
   });
 });
+
+//export用uri
+router.get('/:id/csv/syukkins', function(req, res) {
+  var id = req.params.id;
+  var query = { googleId : id };
+  var op = {sort : {registDay : -1}};
+  dkmodel.find(query, {}, op, function(err, docs){ 
+    if(err) console.log(err.message);
+    json2csv({
+      data : docs,
+      field: [
+        "registDay",
+        "googleId",
+        "発生日数",
+        "archive",
+        "remains"
+      ]
+    },function(err, data){
+      res.send(data);
+    });
+  });
+});
+
+//export用uri
+router.get('/:id/csv/syutokus', function(req, res) {
+  var id = req.params.id;
+  var query = { googleId : id };
+  var op = {sort : {registDay : -1}};
+  model.find(query, {}, op, function(err, docs){ 
+    if(err) console.log(err.message);
+    json2csv({
+      data : docs,
+      field: [
+        "registDay",
+        "googleId",
+        "consumeDay",
+        "syurui",
+        "archive",
+        "comment"
+      ]
+    },function(err, data){
+      res.send(data);
+    });
+  });
+});
+
+//export用uri
+router.get('/:id/csv/yuukyuus', function(req, res) {
+  var id = req.params.id;
+  var query = { googleId : id };
+  var op = {sort : {registDay : -1}};
+  ykmodel.find(query, {}, op, function(err, docs){
+    json2csv({
+      data : docs,
+      field: [
+        "registDay",
+        "googleId",
+        "発生日数",
+        "archive",
+        "remains"
+      ]
+    },function(err, data){
+      res.send(data);
+    });
+  });
+});
+
 
 module.exports = router;
