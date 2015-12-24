@@ -64,8 +64,8 @@ router.get('/:id/csv/syukkins', function(req, res) {
   dkmodel.find(query, {}, op, function(err, docs){ 
     if(err) console.log(err.message);
     json2csv({
-      data : docs,
-      field: [
+      data  : docs,
+      fields: [
         "registDay",
         "googleId",
         "発生日数",
@@ -85,9 +85,10 @@ router.get('/:id/csv/syutokus', function(req, res) {
   var op = {sort : {registDay : -1}};
   model.find(query, {}, op, function(err, docs){ 
     if(err) console.log(err.message);
+    
     json2csv({
       data : docs,
-      field: [
+      fields: [
         "registDay",
         "googleId",
         "consumeDay",
@@ -108,8 +109,8 @@ router.get('/:id/csv/yuukyuus', function(req, res) {
   var op = {sort : {registDay : -1}};
   ykmodel.find(query, {}, op, function(err, docs){
     json2csv({
-      data : docs,
-      field: [
+      data  : docs,
+      fields: [
         "registDay",
         "googleId",
         "発生日数",
