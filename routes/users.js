@@ -72,7 +72,7 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
     json2csv(json2csvOp,function(err, data){
       var fileName = id + "_syukkins.csv";
       fs.writeFile(fileName, data, function(err){
-        if (err) { console.(err.stack); }
+        if (err) { console.log(err.stack); }
         res.sendFile(fileName);
         res.send("output complet");
       });
@@ -98,7 +98,7 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
     json2csv(json2csvOp,function(err, data){
       var fileName = id + "_syutokus.csv";
       fs.writeFile(fileName, data, function(err){
-        if (err) { console.(err.stack); }
+        if (err) { console.log(err.stack); }
         res.sendFile(fileName);
         res.send("output complet");
       });
@@ -123,7 +123,7 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
     json2csv(json2csvOp, function(err, data){
       var fileName = id + "_yuukyuus.csv";
       fs.writeFile(fileName, data, function(err){
-        if (err) { console.(err.stack); }
+        if (err) { console.log(err.stack); }
         res.sendFile(fileName);
         res.send("output complet");
       });
