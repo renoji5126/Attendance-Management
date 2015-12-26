@@ -9,12 +9,11 @@ var userinfo = module.parent.exports.userInfoModel;
 var model = mongoose.models.syutokus;
 var ykmodel = mongoose.models.yuukyuus;
 var dkmodel = mongoose.models.syukkins;
-
+var op = {sort : {registDay : -1}};
 /* GET users listing. */
 router.get('/:id', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
-  var op = {sort : {registDay : -1}};
   var optisions = {admin : req.session.passport.user.admin}
   async.parallel({
     user : function(plcb){
@@ -38,7 +37,6 @@ router.get('/:id', function(req, res) {
 router.get('/:id/export', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
-  var op = {sort : {registDay : -1}};
   async.parallel({
     user : function(plcb){
       userinfo.find(query, function(err, docs){ plcb(err, docs[0]); });
@@ -55,27 +53,28 @@ router.get('/:id/export', function(req, res) {
     res.json(results);
   });
 });
-
+var json2csvOp = { newLine: "\r\n" };
 //export用uri
 router.get('/:id/export/syukkins.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
-  var op = {sort : {registDay : -1}};
   dkmodel.find(query, {}, op, function(err, docs){ 
     if(err) console.log(err.message);
-    json2csv({
-      data  : docs,
-      fields: [
-        "registDay",
-        "googleId",
-        "発生日数",
-        "archive",
-        "remains"
-      ],
-      newLine : "\r\n"
-
-    },function(err, data){
-      res.send(data);
+    json2csvOp.data = docs;
+    json2csvOp.fields = [
+      "registDay",
+      "googleId",
+      "発生日数",
+      "archive",
+      "remains"
+    ];
+    json2csv(json2csvOp,function(err, data){
+      var fileName = id + "_syukkins.csv";
+      fs.writeFile(fileName, data, function(err){
+        if (err) { console.(err.stack); }
+        res.sendFile(fileName);
+        res.send("output complet");
+      });
     });
   });
 });
@@ -87,21 +86,21 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
   var op = {sort : {registDay : -1}};
   model.find(query, {}, op, function(err, docs){ 
     if(err) console.log(err.message);
-    
-    json2csv({
-      data : docs,
-      fields: [
-        "registDay",
-        "googleId",
-        "consumeDay",
-        "syurui",
-        "archive",
-        "comment"
-      ],
-      newLine : "\r\n"
-
-    },function(err, data){
-      res.send(data);
+    json2csvOp.data = docs;
+    json2csvOp.fields = [
+      "googleId",
+      "consumeDay",
+      "syurui",
+      "archive",
+      "comment"
+    ];
+    json2csv(json2csvOp,function(err, data){
+      var fileName = id + "_syutokus.csv";
+      fs.writeFile(fileName, data, function(err){
+        if (err) { console.(err.stack); }
+        res.sendFile(fileName);
+        res.send("output complet");
+      });
     });
   });
 });
@@ -110,20 +109,23 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
 router.get('/:id/export/yuukyuus.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
-  var op = {sort : {registDay : -1}};
   ykmodel.find(query, {}, op, function(err, docs){
-    json2csv({
-      data  : docs,
-      fields: [
-        "registDay",
-        "googleId",
-        "発生日数",
-        "archive",
-        "remains"
-      ],
-      newLine : "\r\n"
-    },function(err, data){
-      res.send(data);
+    if(err) console.log(err.message);
+    json2csvOp.data = docs;
+    json2csvOp.fields = [
+      "registDay",
+      "googleId",
+      "発生日数",
+      "archive",
+      "remains"
+    ];
+    json2csv(json2csvOp, function(err, data){
+      var fileName = id + "_yuukyuus.csv";
+      fs.writeFile(fileName, data, function(err){
+        if (err) { console.(err.stack); }
+        res.sendFile(fileName);
+        res.send("output complet");
+      });
     });
   });
 });
