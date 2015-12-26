@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var async = require('async');
 var json2csv = require('json2csv');
+var fs = require('fs');
 var userinfo = module.parent.exports.userInfoModel;
 var router = express.Router();
 var mongoose = module.parent.exports.mongoose;
