@@ -71,7 +71,9 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
         "発生日数",
         "archive",
         "remains"
-      ]
+      ],
+      newLine : "\r\n"
+
     },function(err, data){
       res.send(data);
     });
@@ -95,7 +97,9 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
         "syurui",
         "archive",
         "comment"
-      ]
+      ],
+      newLine : "\r\n"
+
     },function(err, data){
       res.send(data);
     });
@@ -116,7 +120,8 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
         "発生日数",
         "archive",
         "remains"
-      ]
+      ],
+      newLine : "\r\n"
     },function(err, data){
       res.send(data);
     });
