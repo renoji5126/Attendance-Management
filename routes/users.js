@@ -55,6 +55,14 @@ router.get('/:id/export', function(req, res) {
   });
 });
 var json2csvOp = { newLine: "\r\n" };
+var sendFileOption = {
+    root: __dirname + '/',
+    dotfiles: 'deny',
+    headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+    }
+  };
 //export用uri
 router.get('/:id/export/syukkins.csv', function(req, res) {
   var id = req.params.id;
@@ -73,8 +81,9 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
       var fileName = id + "_syukkins.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
-        res.sendFile(fileName);
-        res.send("output complet");
+        res.sendFile(fileName, sendFileOption,function(err){
+          res.send("output complet");
+        });
       });
     });
   });
@@ -99,8 +108,9 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
       var fileName = id + "_syutokus.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
-        res.sendFile(fileName);
-        res.send("output complet");
+        res.sendFile(fileName, sendFileOption,function(err){
+          res.send("output complet");
+        });
       });
     });
   });
@@ -124,8 +134,9 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
       var fileName = id + "_yuukyuus.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
-        res.sendFile(fileName);
-        res.send("output complet");
+        res.sendFile(fileName, sendFileOption,function(err){
+          res.send("output complet");
+        });
       });
     });
   });
