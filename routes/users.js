@@ -35,7 +35,7 @@ router.get('/:id', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/json', function(req, res) {
+router.get('/:id/export', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
@@ -57,7 +57,7 @@ router.get('/:id/json', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/csv/syukkins', function(req, res) {
+router.get('/:id/export/syukkins.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
@@ -79,7 +79,7 @@ router.get('/:id/csv/syukkins', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/csv/syutokus', function(req, res) {
+router.get('/:id/export/syutokus.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
@@ -103,7 +103,7 @@ router.get('/:id/csv/syutokus', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/csv/yuukyuus', function(req, res) {
+router.get('/:id/export/yuukyuus.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
