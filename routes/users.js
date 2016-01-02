@@ -78,7 +78,7 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
       "remains"
     ];
     json2csv(json2csvOp,function(err, data){
-      var fileName = sendoFileOption.root + id + "_syukkins.csv";
+      var fileName = sendFileOption.root + id + "_syukkins.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
         res.sendFile(fileName, sendFileOption,function(err){
@@ -105,7 +105,7 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
       "comment"
     ];
     json2csv(json2csvOp,function(err, data){
-      var fileName = sendoFileOption.root + id + "_syutokus.csv";
+      var fileName = sendFileOption.root + id + "_syutokus.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
         res.sendFile(fileName, sendFileOption,function(err){
@@ -131,7 +131,7 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
       "remains"
     ];
     json2csv(json2csvOp, function(err, data){
-      var fileName = sendoFileOption.root + id + "_yuukyuus.csv";
+      var fileName = sendFileOption.root + id + "_yuukyuus.csv";
       fs.writeFile(fileName, data, function(err){
         if (err) { console.log(err.stack); }
         res.sendFile(fileName, sendFileOption,function(err){
