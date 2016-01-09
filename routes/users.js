@@ -83,6 +83,7 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
       //  if (err) { console.log(err.stack); }
       //  res.sendFile(fileName, sendFileOption,function(err){
       //    res.send("output complet");
+          res.setHeader('Content-Type', 'text/csv');
           res.send(data);
       //  });
       //});
@@ -111,6 +112,7 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
       //  if (err) { console.log(err.stack); }
       //  res.sendFile(fileName, sendFileOption,function(err){
       //    res.send("output complet");
+          res.setHeader('Content-Type', 'text/csv');
           res.send(data);
       //  });
       //});
@@ -138,6 +140,7 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
       //  if (err) { console.log(err.stack); }
       //  res.sendFile(fileName, sendFileOption,function(err){
       //    res.send("output complet");
+          res.setHeader('Content-Type', 'text/csv');
           res.send(data);
       //  });
       //});
