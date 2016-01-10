@@ -3,6 +3,8 @@ var passport = require('passport');
 var async = require('async');
 var json2csv = require('json2csv');
 var fs = require('fs');
+var iconv = require("iconv").Iconv;
+var sjis = new Iconv('UTF-8', 'Shift_JIS');
 var userinfo = module.parent.exports.userInfoModel;
 var router = express.Router();
 var mongoose = module.parent.exports.mongoose;
@@ -78,15 +80,8 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
       "remains"
     ];
     json2csv(json2csvOp,function(err, data){
-      //var fileName = sendFileOption.root + id + "_syukkins.csv";
-      //fs.writeFile(fileName, data, function(err){
-      //  if (err) { console.log(err.stack); }
-      //  res.sendFile(fileName, sendFileOption,function(err){
-      //    res.send("output complet");
-          res.setHeader('Content-Type', 'text/csv');
-          res.send(data);
-      //  });
-      //});
+      res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
+      res.send(sjis.convert(data));
     });
   });
 });
@@ -107,15 +102,8 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
       "comment"
     ];
     json2csv(json2csvOp,function(err, data){
-      //var fileName = sendFileOption.root + id + "_syutokus.csv";
-      //fs.writeFile(fileName, data, function(err){
-      //  if (err) { console.log(err.stack); }
-      //  res.sendFile(fileName, sendFileOption,function(err){
-      //    res.send("output complet");
-          res.setHeader('Content-Type', 'text/csv');
-          res.send(data);
-      //  });
-      //});
+      res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
+      res.send(sjis.convert(data));
     });
   });
 });
@@ -135,15 +123,8 @@ router.get('/:id/export/yuukyuus.csv', function(req, res) {
       "remains"
     ];
     json2csv(json2csvOp, function(err, data){
-      //var fileName = sendFileOption.root + id + "_yuukyuus.csv";
-      //fs.writeFile(fileName, data, function(err){
-      //  if (err) { console.log(err.stack); }
-      //  res.sendFile(fileName, sendFileOption,function(err){
-      //    res.send("output complet");
-          res.setHeader('Content-Type', 'text/csv');
-          res.send(data);
-      //  });
-      //});
+      res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
+      res.send(sjis.convert(data));
     });
   });
 });
