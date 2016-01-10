@@ -109,7 +109,8 @@ router.get('/:id/export/syutokus.csv', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/export/yuukyuus.csv', function(req, res) {
+//router.get('/:id/export/yuukyuus.csv', function(req, res) {
+router.get('/:id/export/有給.csv', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   ykmodel.find(query, {}, op, function(err, docs){
