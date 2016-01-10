@@ -73,8 +73,8 @@ router.get('/:id/export/' + encodeURI("休日出勤.csv"), function(req, res) {
     if(err) console.log(err.message);
     json2csvOp.data = docs;
     json2csvOp.fields = [
-      "registDay",
       "googleId",
+      "registDay",
       "発生日数",
       "archive",
       "remains"
@@ -96,6 +96,7 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
     json2csvOp.data = docs;
     json2csvOp.fields = [
       "googleId",
+      "registDay",
       "consumeDay",
       "syurui",
       "archive",
@@ -109,7 +110,6 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
 });
 
 //export用uri
-//router.get('/:id/export/yuukyuus.csv', function(req, res) {
 router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
@@ -117,8 +117,8 @@ router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
     if(err) console.log(err.message);
     json2csvOp.data = docs;
     json2csvOp.fields = [
-      "registDay",
       "googleId",
+      "registDay",
       "発生日数",
       "archive",
       "remains"
