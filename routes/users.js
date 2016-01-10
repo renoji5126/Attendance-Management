@@ -66,7 +66,7 @@ var sendFileOption = {
     }
   };
 //export用uri
-router.get('/:id/export/syukkins.csv', function(req, res) {
+router.get('/:id/export/' + encodeURI("休日出勤"), function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   dkmodel.find(query, {}, op, function(err, docs){ 
@@ -87,7 +87,7 @@ router.get('/:id/export/syukkins.csv', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/export/syutokus.csv', function(req, res) {
+router.get('/:id/export/' + encodeURI("申請済み休暇"), function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
