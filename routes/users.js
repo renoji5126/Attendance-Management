@@ -124,7 +124,7 @@ router.get('/export/'+encodeURI("申請済み休暇").toString()+'.csv', functio
 });
 
 //export用uri
-router.get('/export/' + encodeURI("有給").toString() + '.csv', function(req, res) {
+router.get('/export/' + encodeURI("有給.csv"), function(req, res) {
   var id;
   if( req.session.passport.user.admin && req.body.user ){
     id = req.body.user;
