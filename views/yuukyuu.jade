@@ -82,7 +82,10 @@ div.row
       div.box-header
         div.box-name
           i.fa.fa-magic
-          span 登録済み申請
+          span 申請済み休暇
+        div.box-icons
+          a(href='/users/#{googleId}/export/申請済み休暇.csv')
+            i.fa.fa-download
       div.box-content
         table.table.table-striped
           thead
@@ -111,6 +114,9 @@ div.row
         div.box-name
           i.fa.fa-magic
           span 申請可能な有給休暇
+        div.box-icons
+          a(href='/users/#{googleId}/export/有給.csv')
+            i.fa.fa-download
       div.box-content
         table.table.table-striped
           thead
@@ -131,6 +137,9 @@ div.row
         div.box-name
           i.fa.fa-magic
           span 休日出勤
+        div.box-icons
+          a(href='/users/#{googleId}/export/休日出勤.csv')
+            i.fa.fa-download
       div.box-content
         table.table.table-striped
           thead

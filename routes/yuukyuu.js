@@ -56,7 +56,12 @@ router.get('/admin', function(req, res) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  var options = { title: '休暇申請',syurui: dbsyurui , admin: req.session.passport.user.admin};
+  var options = {
+    title: '休暇申請',
+    syurui: dbsyurui ,
+    admin: req.session.passport.user.admin,
+    googleId: req.session.passport.user.googleId
+  };
   var query = {  
     archive   : false,
     googleId  : req.session.passport.user.googleId
