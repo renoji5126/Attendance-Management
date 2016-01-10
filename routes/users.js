@@ -37,13 +37,8 @@ router.get('/:id', function(req, res) {
 });
 
 //export用uri
-router.get('/export', function(req, res) {
-  var id;
-  if( req.session.passport.user.admin && req.body.user ){
-    id = req.body.user;
-  }else{
-    id = req.session.passport.user.googleId;
-  }
+router.get('/:id/export', function(req, res) {
+  var id = req.params.id;
   var query = { googleId : id };
   async.parallel({
     user : function(plcb){
@@ -71,13 +66,8 @@ var sendFileOption = {
     }
   };
 //export用uri
-router.get('/export/'+ encodeURI("休日出勤").toString() +'.csv', function(req, res) {
-  var id;
-  if( req.session.passport.user.admin && req.body.user ){
-    id = req.body.user;
-  }else{
-    id = req.session.passport.user.googleId;
-  }
+router.get('/:id/export/syukkins.csv', function(req, res) {
+  var id = req.params.id;
   var query = { googleId : id };
   dkmodel.find(query, {}, op, function(err, docs){ 
     if(err) console.log(err.message);
@@ -97,13 +87,8 @@ router.get('/export/'+ encodeURI("休日出勤").toString() +'.csv', function(re
 });
 
 //export用uri
-router.get('/export/'+encodeURI("申請済み休暇").toString()+'.csv', function(req, res) {
-  var id;
-  if( req.session.passport.user.admin && req.body.user ){
-    id = req.body.user;
-  }else{
-    id = req.session.passport.user.googleId;
-  }
+router.get('/:id/export/syutokus.csv', function(req, res) {
+  var id = req.params.id;
   var query = { googleId : id };
   var op = {sort : {registDay : -1}};
   model.find(query, {}, op, function(err, docs){ 
@@ -124,13 +109,8 @@ router.get('/export/'+encodeURI("申請済み休暇").toString()+'.csv', functio
 });
 
 //export用uri
-router.get('/export/' + encodeURI("有給.csv"), function(req, res) {
-  var id;
-  if( req.session.passport.user.admin && req.body.user ){
-    id = req.body.user;
-  }else{
-    id = req.session.passport.user.googleId;
-  }
+router.get('/:id/export/yuukyuus.csv', function(req, res) {
+  var id = req.params.id;
   var query = { googleId : id };
   ykmodel.find(query, {}, op, function(err, docs){
     if(err) console.log(err.message);

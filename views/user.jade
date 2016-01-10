@@ -53,7 +53,7 @@ if(admin)
             i.fa.fa-magic
             span 付加済み有給休暇
           div.box-icons
-            a(href='/user/export/有給.csv')
+            a(href='/user/#{db.user.googleId}/export/yuukyuus.csv')
               i.fa.fa-download
              
         div.box-content
@@ -82,7 +82,7 @@ if(admin)
             i.fa.fa-magic
             span 申請済み休暇
           div.box-icons
-            a(href='/user/export/申請済み休暇.csv')
+            a(href='/user/#{db.user.googleId}/export/syutokus.csv')
               i.fa.fa-download
         div.box-content
           table.table.table-striped
@@ -115,7 +115,7 @@ if(admin)
           i.fa.fa-magic
           span 休日出勤
         div.box-icons
-          a(href='/user/export/休日出勤.csv')
+          a(href='/user/#{db.user.googleId}/export/syukkin.csv')
             i.fa.fa-download
       div.box-content
         table.table.table-striped
