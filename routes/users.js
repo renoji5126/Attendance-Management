@@ -37,8 +37,13 @@ router.get('/:id', function(req, res) {
 });
 
 //export用uri
-router.get('/:id/export', function(req, res) {
-  var id = req.params.id;
+router.get('/export', function(req, res) {
+  var id;
+  if( req.session.passport.user.admin && req.body.user ){
+    id = req.body.user;
+  }else{
+    id = req.session.passport.user.googleId;
+  }
   var query = { googleId : id };
   async.parallel({
     user : function(plcb){
@@ -66,7 +71,7 @@ var sendFileOption = {
     }
   };
 //export用uri
-router.get('/export/休日出勤.csv', function(req, res) {
+router.get('/export/'+ encodeURI("休日出勤").toString() +'.csv', function(req, res) {
   var id;
   if( req.session.passport.user.admin && req.body.user ){
     id = req.body.user;
@@ -92,7 +97,7 @@ router.get('/export/休日出勤.csv', function(req, res) {
 });
 
 //export用uri
-router.get('/export/申請済み休暇.csv', function(req, res) {
+router.get('/export/'+encodeURI("申請済み休暇").toString()+'.csv', function(req, res) {
   var id;
   if( req.session.passport.user.admin && req.body.user ){
     id = req.body.user;
@@ -119,7 +124,7 @@ router.get('/export/申請済み休暇.csv', function(req, res) {
 });
 
 //export用uri
-router.get('/export/有給.csv', function(req, res) {
+router.get('/export/' + encodeURI("有給").toString() + '.csv', function(req, res) {
   var id;
   if( req.session.passport.user.admin && req.body.user ){
     id = req.body.user;
