@@ -134,6 +134,8 @@ function registTypefind(registDay, userid, resultCb , noResultCb){
 
 function ykconsumeDayfind(registDay, userid, remain, cb){
   var ago = new Date(registDay);
+  // 二年以内のデータの抽出
+  // ※有給の期限は二年が限度だから
   ago.setFullYear(ago.getFullYear() - 2);
   var query ={
     googleId  : userid,
@@ -150,14 +152,14 @@ function ykconsumeDayfind(registDay, userid, remain, cb){
 }
 
 /*
- * 休日出勤の期限は２ヶ月前から６ヶ月後まで
+ * 休日出勤の期限は１ヶ月前から２ヶ月後まで
  * 
  */
 function dkconsumeDayfind(registDay, userid, cb){
   var ago = new Date(registDay);
   var before = new Date(registDay);
-  ago.setMonth(ago.getMonth() - 6);
-  before.setMonth(before.getMonth() + 2);
+  ago.setMonth(ago.getMonth() - 2);
+  before.setMonth(before.getMonth() + 1);
   var query = {
     googleId  : userid,
     registDay : { $gte : ago , $lte : before },
