@@ -79,7 +79,11 @@ router.get('/:id/export/' + encodeURI("休日出勤.csv"), function(req, res) {
       },{
         label : "登録日",
         value : function(row) {
-          return new Date(row.registDay).toLocaleDateString();
+          var val = "";
+          if (row.registDay !== "") {
+            val = new Date(row.registDay).toLocaleDateString();
+          }
+          return val;
         }
       },{
         label : "発生日数",
@@ -114,12 +118,20 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
       },{
         label : "休暇日",
         value : function(row) {
-          return new Date(row.registDay).toLocaleDateString();
+          var val = "";
+          if (row.registDay !== "") {
+            val = new Date(row.registDay).toLocaleDateString();
+          }
+          return val;
         }
       },{
         label : "消化有給日",
         value : function(row) {
-          return new Date(row.consumeDay).toLocaleDateString();
+          var val = "";
+          if (row.consumeDay !== "") {
+            val = new Date(row.consumeDay).toLocaleDateString();
+          }
+          return val;
         }
       },{
         label : "申請休暇種別",
@@ -153,7 +165,11 @@ router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
       },{
         label : "登録日",
         value : function(row) {
-          return new Date(row.registDay).toLocaleDateString();
+          var val = "";
+          if (row.registDay !== "") {
+            val = new Date(row.registDay).toLocaleDateString();
+          }
+          return val;
         }
       },{
         label : "発生日数",
