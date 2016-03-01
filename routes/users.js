@@ -73,11 +73,22 @@ router.get('/:id/export/' + encodeURI("休日出勤.csv"), function(req, res) {
     if(err) console.log(err.message);
     json2csvOp.data = docs;
     json2csvOp.fields = [
-      "googleId",
-      "registDay",
-      "発生日数",
-      "archive",
-      "remains"
+      {
+        label : "googleId",
+        value : "googleId"
+      },{
+        label : "登録日",
+        value : "registDay"
+      },{
+        label : "発生日数",
+        value : "発生日数"
+      },{
+        label : "残有給数",
+        value : "remains"
+      },{
+        label : "アーカイブ",
+        value : "archive"
+      }
     ];
     json2csv(json2csvOp,function(err, data){
       res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
@@ -95,12 +106,25 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
     if(err) console.log(err.message);
     json2csvOp.data = docs;
     json2csvOp.fields = [
-      "googleId",
-      "registDay",
-      "consumeDay",
-      "syurui",
-      "archive",
-      "comment"
+      {
+        label : "googleId",
+        value : "googleId"
+      },{
+        label : "休暇日",
+        value : "registDay"
+      },{
+        label : "消化有給日",
+        value : "consumeDay"
+      },{
+        label : "申請休暇種別",
+        value : "syurui"
+      },{
+        label : "アーカイブ",
+        value : "archive"
+      },{
+        label : "備考欄",
+        value : "comment"
+      }
     ];
     json2csv(json2csvOp,function(err, data){
       res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
@@ -117,11 +141,22 @@ router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
     if(err) console.log(err.message);
     json2csvOp.data = docs;
     json2csvOp.fields = [
-      "googleId",
-      "registDay",
-      "発生日数",
-      "archive",
-      "remains"
+      {
+        label : "googleId",
+        value : "googleId"
+      },{
+        label : "登録日",
+        value : "registDay"
+      },{
+        label : "発生日数",
+        value : "発生日数"
+      },{
+        label : "残有給数",
+        value : "remains"
+      },{
+        label : "アーカイブ",
+        value : "archive"
+      }
     ];
     json2csv(json2csvOp, function(err, data){
       res.setHeader('Content-Type', 'text/csv; charset=Shift_JIS');
