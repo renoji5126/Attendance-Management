@@ -113,10 +113,14 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
         value : "googleId"
       },{
         label : "休暇日",
-        value : "registDay"
+        value : function(row) {
+          return new Date(row.registDay).toLocaleDateString();
+        }
       },{
         label : "消化有給日",
-        value : "consumeDay"
+        value : function(row) {
+          return new Date(row.consumeDay).toLocaleDateString();
+        }
       },{
         label : "申請休暇種別",
         value : "syurui"
@@ -148,7 +152,9 @@ router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
         value : "googleId"
       },{
         label : "登録日",
-        value : "registDay"
+        value : function(row) {
+          return new Date(row.registDay).toLocaleDateString();
+        }
       },{
         label : "発生日数",
         value : "発生日数"
