@@ -80,7 +80,7 @@ router.get('/:id/export/' + encodeURI("休日出勤.csv"), function(req, res) {
         label : "登録日",
         value : function(row) {
           var val = "";
-          if (row.registDay !== "") {
+          if (new Date(row.registDay).toString() !== "Invalid Date") {
             val = new Date(row.registDay).toLocaleDateString();
           }
           return val;
@@ -119,7 +119,7 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
         label : "休暇日",
         value : function(row) {
           var val = "";
-          if (row.registDay !== "") {
+          if (new Date(row.registDay).toString() !== "Invalid Date") {
             val = new Date(row.registDay).toLocaleDateString();
           }
           return val;
@@ -128,7 +128,7 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
         label : "消化有給日",
         value : function(row) {
           var val = "";
-          if (row.consumeDay !== "") {
+          if (new Date(row.consumeDay).toString() !== "Invalid Date") {
             val = new Date(row.consumeDay).toLocaleDateString();
           }
           return val;
@@ -166,7 +166,7 @@ router.get('/:id/export/'+ encodeURI("有給.csv"), function(req, res) {
         label : "登録日",
         value : function(row) {
           var val = "";
-          if (row.registDay !== "") {
+          if (new Date(row.registDay).toString() !== "Invalid Date") {
             val = new Date(row.registDay).toLocaleDateString();
           }
           return val;
