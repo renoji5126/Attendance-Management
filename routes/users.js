@@ -78,7 +78,9 @@ router.get('/:id/export/' + encodeURI("休日出勤.csv"), function(req, res) {
         value : "googleId"
       },{
         label : "登録日",
-        value : "registDay"
+        value : function(row) {
+          return new Date(row.registDay).toLocaleDateString();
+        }
       },{
         label : "発生日数",
         value : "発生日数"
@@ -119,11 +121,11 @@ router.get('/:id/export/' + encodeURI("申請済み休暇.csv"), function(req, r
         label : "申請休暇種別",
         value : "syurui"
       },{
-        label : "アーカイブ",
-        value : "archive"
-      },{
         label : "備考欄",
         value : "comment"
+      },{
+        label : "アーカイブ",
+        value : "archive"
       }
     ];
     json2csv(json2csvOp,function(err, data){
