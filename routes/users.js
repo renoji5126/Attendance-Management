@@ -13,11 +13,35 @@ var model = mongoose.models.syutokus;
 var ykmodel = mongoose.models.yuukyuus;
 var dkmodel = mongoose.models.syukkins;
 var op = {sort : {registDay : -1}};
+var dbsyurui =[{
+    name:'有給(全休)'
+    ,day:1.0
+  },{
+    name:'有給(午前休)'
+    ,day:0.5
+  },{
+    name:'有給(午後休)'
+    ,day:0.5
+  },{
+    name:'代休'
+    ,day:1.0
+  },{
+    name:'欠勤'
+    ,day:1.0
+  },{
+    name:'忌引'
+    ,day:1.0
+  }];
+
+
 /* GET users listing. */
 router.get('/:id', function(req, res) {
   var id = req.params.id;
   var query = { googleId : id };
-  var optisions = {admin : req.session.passport.user.admin}
+  var optisions = {
+    admin : req.session.passport.user.admin,
+    syurui: dbsyurui
+  };
   async.parallel({
     user : function(plcb){
       userinfo.find(query, function(err, docs){ plcb(err, docs[0]); });
